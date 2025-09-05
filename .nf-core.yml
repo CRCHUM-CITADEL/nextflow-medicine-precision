@@ -1,28 +1,4 @@
-repository_type: pipeline
-
-nf_core_version: 3.3.2
-
 lint:
-  files_unchanged:
-    - CODE_OF_CONDUCT.md
-    - assets/nf-core-test_logo_light.png
-    - docs/images/nf-core-test_logo_light.png
-    - docs/images/nf-core-test_logo_dark.png
-    - .github/ISSUE_TEMPLATE/bug_report.yml
-    - .github/CONTRIBUTING.md
-    - .github/PULL_REQUEST_TEMPLATE.md
-    - assets/email_template.txt
-    - docs/README.md
-    - .prettierignore
-    - .github/CONTRIBUTING.md
-    - .github/PULL_REQUEST_TEMPLATE.md
-    - .github/CONTRIBUTING.md
-    - LICENSE
-    - .github/CONTRIBUTING.md
-    - assets/sendmail_template.txt
-  nextflow_config: false
-  nf_test_content: false
-  multiqc_config: false
   files_exist:
     - CODE_OF_CONDUCT.md
     - assets/nf-core-test_logo_light.png
@@ -45,20 +21,41 @@ lint:
     - nf-test.config
     - tests/default.nf.test
     - assets/multiqc_config.yml
+  files_unchanged:
+    - CODE_OF_CONDUCT.md
+    - assets/nf-core-test_logo_light.png
+    - docs/images/nf-core-test_logo_light.png
+    - docs/images/nf-core-test_logo_dark.png
+    - .github/ISSUE_TEMPLATE/bug_report.yml
+    - .github/CONTRIBUTING.md
+    - .github/PULL_REQUEST_TEMPLATE.md
+    - assets/email_template.txt
+    - docs/README.md
+    - .prettierignore
+    - .github/CONTRIBUTING.md
+    - .github/PULL_REQUEST_TEMPLATE.md
+    - .github/CONTRIBUTING.md
+    - LICENSE
+    - .github/CONTRIBUTING.md
+    - assets/sendmail_template.txt
+  multiqc_config: false
+  nextflow_config: false
+  nf_test_content: false
   readme:
     - nextflow_badge
     - nfcore_template_badge
+  schema_description: false
   schema_lint: false
   schema_params: false
-  schema_description: false
-
+nf_core_version: 3.3.2
+repository_type: pipeline
 template:
-  org: citadel-test
-  name: test
-  description: testing for citadel
   author: Justin
-  version: 1.0.0dev
-  force: true
+  description: testing for citadel
+  force: false
+  is_nfcore: false
+  name: test
+  org: citadel-test
   outdir: .
   skip_features:
     - github_badges
@@ -75,4 +72,4 @@ template:
     - vscode
     - citations
     - slackreport
-  is_nfcore: false
+  version: 1.0.0dev
