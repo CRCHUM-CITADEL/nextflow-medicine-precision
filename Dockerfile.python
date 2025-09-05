@@ -5,6 +5,9 @@ WORKDIR /app
 # Copy the project into the image
 ADD . /app
 
+# Install system dependencies (like ps)
+RUN apt-get update && apt-get install -y --no-install-recommends procps && rm -rf /var/lib/apt/lists/*
+
 # Install dependencies
 RUN uv venv
 RUN uv pip install polars==1.33.0

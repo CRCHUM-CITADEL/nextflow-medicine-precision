@@ -5,6 +5,14 @@ RUN dnf -y update && dnf install -y \
     curl wget java-17-openjdk \
     && dnf clean all
 
+# install procps for nextflow
+RUN dnf -y install procps-ng && dnf clean all
+
+# install EPEL and apptainer
+RUN dnf -y install epel-release \
+    && dnf -y install apptainer \
+    && dnf clean all
+
 #set version of nextflow
 ENV NXT_VER=25.04.6
 

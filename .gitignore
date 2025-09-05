@@ -8,5 +8,5 @@ testing*
 *.pyc
 null/
 output/
-
+*.log
 *.sif

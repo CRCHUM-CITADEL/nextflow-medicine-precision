@@ -13,7 +13,9 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { TEST  } from './workflows/test'
+include { TEST  }                   from './workflows/test'
+include { PYTHON_TEST}              from './workflows/python_test'
+include { R_TEST }                  from './workflows/r_test'
 include { PIPELINE_INITIALISATION } from './subworkflows/local/utils_nfcore_test_pipeline'
 include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_test_pipeline'
 include { getGenomeAttribute      } from './subworkflows/local/utils_nfcore_test_pipeline'
@@ -44,11 +46,18 @@ workflow CITADELTEST_TEST {
     samplesheet // channel: samplesheet read in from --input
 
     main:
-
     //
     // WORKFLOW: Run pipeline
     //
-    TEST (
+    // TEST (
+    //     samplesheet
+    // )
+
+    PYTHON_TEST (
+        samplesheet
+    )
+
+    R_TEST (
         samplesheet
     )
 }
@@ -76,7 +85,8 @@ workflow {
     // WORKFLOW: Run main workflow
     //
     CITADELTEST_TEST (
-        PIPELINE_INITIALISATION.out.samplesheet
+        // PIPELINE_INITIALISATION.out.samplesheet
+        Channel.fromPath(params.input)
     )
     //
     // SUBWORKFLOW: Run completion tasks
