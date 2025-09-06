@@ -1,4 +1,5 @@
 .nextflow*
+mail.rc
 work/
 data/
 results/
