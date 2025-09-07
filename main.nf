@@ -13,9 +13,7 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { TEST  }                   from './workflows/test'
-include { PYTHON_TEST}              from './workflows/python_test'
-include { R_TEST }                  from './workflows/r_test'
+include { TEST } from './workflows/test.nf'
 include { PIPELINE_INITIALISATION } from './subworkflows/local/utils_nfcore_test_pipeline'
 include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_test_pipeline'
 include { getGenomeAttribute      } from './subworkflows/local/utils_nfcore_test_pipeline'
@@ -38,29 +36,21 @@ params.fasta = getGenomeAttribute('fasta')
 */
 
 //
-// WORKFLOW: Run main analysis pipeline depending on type of input
+// WORKFLOWS : Run main pipeline.
 //
-workflow CITADELTEST_TEST {
 
+workflow NFCORE_CITADEL_TEST {
     take:
-    samplesheet // channel: samplesheet read in from --input
+    samplesheet
 
     main:
-    //
-    // WORKFLOW: Run pipeline
-    //
-    // TEST (
-    //     samplesheet
-    // )
 
-    PYTHON_TEST (
+    TEST (
         samplesheet
     )
 
-    R_TEST (
-        samplesheet
-    )
 }
+
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     RUN MAIN WORKFLOW
@@ -70,6 +60,11 @@ workflow CITADELTEST_TEST {
 workflow {
 
     main:
+
+    if (!params.input){
+        error("ERROR: Could not find samplesheet file. Not running any tests. Check input in nextflow.config")
+    }
+
     //
     // SUBWORKFLOW: Run initialisation tasks
     //
@@ -84,9 +79,8 @@ workflow {
     //
     // WORKFLOW: Run main workflow
     //
-    CITADELTEST_TEST (
-        // PIPELINE_INITIALISATION.out.samplesheet
-        Channel.fromPath(params.input)
+    NFCORE_CITADEL_TEST (
+        PIPELINE_INITIALISATION.out.samplesheet
     )
     //
     // SUBWORKFLOW: Run completion tasks

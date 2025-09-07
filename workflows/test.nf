@@ -4,6 +4,7 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pipeline'
+include { SIMPLE_TEST } from '../subworkflows/local/simple_test'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -14,8 +15,11 @@ include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pi
 workflow TEST {
 
     take:
-    ch_samplesheet // channel: samplesheet read in from --input
+    samplesheet // channel: samplesheet read in from --input
     main:
+
+    // Run test subworkflow
+    SIMPLE_TEST(samplesheet)
 
     ch_versions = Channel.empty()
 

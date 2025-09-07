@@ -1,4 +1,4 @@
-process RUN {
+process PYTHON_TEST {
     container 'python-citadel_v3.12.sif'
 
     input:
@@ -8,15 +8,5 @@ process RUN {
     """
     test.py --input $samplesheet
     """
-
-}
-
-workflow PYTHON_TEST {
-    take:
-    samplesheet
-
-    main:
-
-    RUN(samplesheet)
 
 }
