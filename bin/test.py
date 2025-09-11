@@ -4,7 +4,7 @@ import argparse
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--input', type=str, required=True)
-    
+
     args = parser.parse_args()
 
     print("Printing the contents of the file using Python!")

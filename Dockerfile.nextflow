@@ -27,4 +27,3 @@ RUN curl -s https://get.nextflow.io | bash \
 #
 
 WORKDIR /app
-

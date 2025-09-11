@@ -11,6 +11,3 @@ RUN apt-get update && apt-get install -y --no-install-recommends procps && rm -r
 # Install dependencies
 RUN uv venv
 RUN uv pip install polars==1.33.0
-
-
-
