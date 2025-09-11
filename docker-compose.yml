@@ -1,4 +1,3 @@
-
 services:
   python:
     build:
@@ -28,4 +27,3 @@ services:
       - ./mail.rc:/etc/mail.rc:ro
       - ./:/app
     image: ghcr.io/justinbellavance/nextflow-citadel:v25.04.6
-

@@ -5,9 +5,9 @@ on:
 
 # minimum permissions required for commenting and pushing
 permissions:
-  contents: write        # needed to push commits
-  issues: write          # needed to create/update comments or reactions
-  pull-requests: write   # for PR-related actions
+  contents: write # needed to push commits
+  issues: write # needed to create/update comments or reactions
+  pull-requests: write # for PR-related actions
 
 jobs:
   fix-linting:
@@ -46,7 +46,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.13'
+          python-version: "3.13"
 
       - name: Install pre-commit
         run: pip install pre-commit
