@@ -12,4 +12,3 @@ null/
 output/
 *.log
 *.sif
-tests/*.snap
