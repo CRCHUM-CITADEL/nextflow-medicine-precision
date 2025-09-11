@@ -1,14 +1,12 @@
 .nextflow
 .nf-test
-mail.rc
+.nf-test.log
 work/
-data/citadel
+data/
 results/
 .DS_Store
 testing/
 testing*
 *.pyc
 null/
-output/
-*.log
 *.sif
