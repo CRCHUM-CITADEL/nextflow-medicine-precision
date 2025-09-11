@@ -3,14 +3,23 @@ on:
   issue_comment:
     types: [created]
 
+permissions:
+  contents: write        # needed to push commits
+  issues: write          # needed to create/update comments or reactions
+  pull-requests: write   # for PR-related actions
+
 jobs:
   fix-linting:
-    # Only run if comment is on a PR with the main repo, and if it contains the magic keywords
+    runs-on: ubuntu-latest
+
+    # Try to use a bot PAT if present, otherwise fall back to the built-in token
+    env:
+      BOT_TOKEN: ${{ secrets.nf_core_bot_auth_token || github.token }}
+
     if: >
       contains(github.event.comment.html_url, '/pull/') &&
       contains(github.event.comment.body, '@nf-core-bot fix linting') &&
       github.repository == 'citadel-test/test'
-    runs-on: ubuntu-latest
     steps:
       # Use the @nf-core-bot token to check out so we can push later
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
