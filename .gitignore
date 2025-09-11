@@ -1,4 +1,5 @@
-.nextflow*
+.nextflow
+.nf-test
 mail.rc
 work/
 data/citadel
@@ -11,3 +12,4 @@ null/
 output/
 *.log
 *.sif
+tests/*.snap
