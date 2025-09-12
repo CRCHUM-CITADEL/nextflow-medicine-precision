@@ -6,10 +6,11 @@ workflow SIMPLE_TEST {
     samplesheet
 
     main:
-    PYTHON_TEST(samplesheet)
-    R_TEST(samplesheet)
+    python_out = PYTHON_TEST(samplesheet)
+    r_out      = R_TEST(samplesheet)
 
     emit:
-    "completed succesfully"
+    python_out
+    r_out
 
 }

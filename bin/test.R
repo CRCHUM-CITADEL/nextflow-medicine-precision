@@ -8,12 +8,15 @@ if (length(args) < 1) {
 
 input_file <- args[1]
 
-# Read and print file contents
 if (!file.exists(input_file)) {
   stop(paste("File does not exist:", input_file))
 }
 
-print("Printing the contents of the file using R")
+# write to current working dir using only the basename so Nextflow can capture it
+base <- basename(input_file)
+output_file <- paste0(base, "_reversed_r.txt")
 
 lines <- readLines(input_file)
-cat(paste(lines, collapse = "\n"), "\n")
+writeLines(rev(lines), output_file)
+
+cat("Reversed file saved as:", output_file, "\n")

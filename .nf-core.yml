@@ -12,7 +12,6 @@ template:
     - github_badges
     - license
     - test_config
-    - multiqc
     - fastqc
     - nf_schema
     - seqera_platform
