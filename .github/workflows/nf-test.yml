@@ -66,7 +66,7 @@ jobs:
       fail-fast: false
       matrix:
         shard: ${{ fromJson(needs.nf-test-changes.outputs.shard) }}
-        profile: [apptainer]
+        profile: [singularity]
         isMain:
           - ${{ github.base_ref == 'master' || github.base_ref == 'main' }}
         NXF_VER:
