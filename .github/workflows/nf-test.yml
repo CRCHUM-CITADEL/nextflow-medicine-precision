@@ -70,12 +70,11 @@ jobs:
         isMain:
           - ${{ github.base_ref == 'master' || github.base_ref == 'main' }}
         NXF_VER:
-          - "24.04.6"
+          - "24.04.2"
           - "latest-everything"
     env:
       NXF_ANSI_LOG: false
       TOTAL_SHARDS: ${{ needs.nf-test-changes.outputs.total_shards }}
-      NXF_SINGULARITY_CMD: apptainer
 
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
