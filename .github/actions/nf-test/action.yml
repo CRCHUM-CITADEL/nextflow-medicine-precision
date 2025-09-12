@@ -36,7 +36,7 @@ runs:
         install-pdiff: true
 
     - name: Setup apptainer
-      if: contains(inputs.profile, 'singularity')
+      if: contains(inputs.profile, 'apptainer')
       uses: eWaterCycle/setup-apptainer@main
 
     - name: Set up Singularity

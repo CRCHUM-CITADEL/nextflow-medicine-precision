@@ -112,15 +112,16 @@ workflow PIPELINE_COMPLETION {
     //
     workflow.onComplete {
         if (email || email_on_fail) {
-            completionEmail(
-                summary_params,
-                email,
-                email_on_fail,
-                plaintext_email,
-                outdir,
-                monochrome_logs,
-                []
-            )
+            // TODO: wait for HPC access
+            // completionEmail(
+            //     summary_params,
+            //     email,
+            //     email_on_fail,
+            //     plaintext_email,
+            //     outdir,
+            //     monochrome_logs,
+            //     []
+            // )
         }
 
         completionSummary(monochrome_logs)

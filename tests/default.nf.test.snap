@@ -1,20 +1,33 @@
 {
     "-profile test": {
         "content": [
-            0,
-            null,
+            2,
+            {
+                "Workflow": {
+                    "citadel-test/test": "v1.0.0dev"
+                }
+            },
             [
                 "pipeline_info",
-                "pipeline_info/test_software_versions.yml"
+                "pipeline_info/test_software_versions.yml",
+                "python",
+                "python/data_1.csv_reversed_python.txt",
+                "python_test_results.txt",
+                "r",
+                "r/data_1.csv_reversed_r.txt",
+                "r_test_results.txt"
             ],
             [
-                
+                "data_1.csv_reversed_python.txt:md5,396f1bd0fedf5539990c10193b0fea85",
+                "python_test_results.txt:md5,080a11c1337af9964a1ae0ee253681d9",
+                "data_1.csv_reversed_r.txt:md5,396f1bd0fedf5539990c10193b0fea85",
+                "r_test_results.txt:md5,080a11c1337af9964a1ae0ee253681d9"
             ]
         ],
         "meta": {
             "nf-test": "0.9.2",
             "nextflow": "25.04.6"
         },
-        "timestamp": "2025-09-11T18:14:11.000744201"
+        "timestamp": "2025-09-12T12:17:25.796041439"
     }
 }
