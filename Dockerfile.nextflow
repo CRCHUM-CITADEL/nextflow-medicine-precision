@@ -14,14 +14,19 @@ RUN dnf -y install epel-release \
     && dnf clean all
 
 #set version of nextflow
-ENV NXT_VER=25.04.6
+ARG NXT_VER=25.04.6
+ENV NXT_VER=${NXT_VER}
 
 # install nextflow (based on version above) and check version
 RUN curl -s https://get.nextflow.io | bash \
     && mv nextflow /usr/local/bin/nextflow \
     && nextflow -v
 
-# ADD ANY MORE SOFTWARE WE MIGHT NEED HERE ()
+RUN wget -qO- https://get.nf-test.com | bash \
+    && mv nf-test /usr/local/bin/nf-test \
+    && nf-test version
+
+# ADD ANY MORE SOFTWARE WE MIGHT NEED HERE:
 #
 #
 #
