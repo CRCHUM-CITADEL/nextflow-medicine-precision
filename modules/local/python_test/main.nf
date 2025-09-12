@@ -1,5 +1,5 @@
 process PYTHON_TEST {
-    container "${projectDir}/containers/python-citadel_v3.12.sif"
+    container 'docker://ghcr.io/justinbellavance/python-citadel:v3.12'
     
     input:
     file samplesheet
