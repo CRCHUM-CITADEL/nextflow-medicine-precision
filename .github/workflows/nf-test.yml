@@ -70,7 +70,7 @@ jobs:
         isMain:
           - ${{ github.base_ref == 'master' || github.base_ref == 'main' }}
         NXF_VER:
-          - "24.04.2"
+          - "24.04.6"
           - "latest-everything"
     env:
       NXF_ANSI_LOG: false
@@ -92,7 +92,7 @@ jobs:
           shard: ${{ matrix.shard }}
           total_shards: ${{ env.TOTAL_SHARDS }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          
+
   confirm-pass:
     needs: [nf-test]
     if: always()
