@@ -1,5 +1,6 @@
 process R_TEST {
-    container 'docker://ghcr.io/justinbellavance/r-citadel:v4.5.1'
+    // TODO: give choice between local and not ghcr
+    container 'oras://ghcr.io/citadel-test/r-citadel:4.5.1'
 
 
     input:
