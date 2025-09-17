@@ -9,5 +9,5 @@ testing/
 testing*
 *.pyc
 null/
-*.sif
+containers/*.sif
 output/
