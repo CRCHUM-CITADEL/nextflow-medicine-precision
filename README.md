@@ -1,8 +1,8 @@
-# citadel-test/test
+# CRCHUM-CITADEL/nextflow-medicine-precision
 
 ## Introduction
 
-**citadel-test/test** is a bioinformatics pipeline that ...
+**CRCHUM-CITADEL/nextflow-medicine-precision** is a bioinformatics pipeline that ...
 
 <!-- TODO nf-core:
    Complete this sentence with a 2-3 sentence summary of what types of data the pipeline ingests, a brief overview of the
@@ -51,7 +51,7 @@ nextflow run citadel-test/test \
 
 ## Credits
 
-citadel-test/test was originally written by Justin.
+CRCHUM-CITADEL/nextflow-medicine-precision was originally written by Justin.
 
 We thank the following people for their extensive assistance in the development of this pipeline:
 
