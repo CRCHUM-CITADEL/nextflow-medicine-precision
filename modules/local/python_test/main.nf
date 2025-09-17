@@ -1,6 +1,6 @@
 process PYTHON_TEST {
-    // TODO: take this container as input (don't assume location)
-    container "$projectDir/containers/python-citadel_v3.12.sif"
+    // TODO: give choice between local and not ghc
+    container "oras://ghcr.io/citadel-test/python-citadel:3.12"
 
     input:
     file samplesheet

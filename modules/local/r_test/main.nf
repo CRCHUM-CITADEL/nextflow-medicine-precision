@@ -1,6 +1,6 @@
 process R_TEST {
-    // TODO: take this container as input (don't assume location)
-    container "$projectDir/containers/r-citadel_v4.5.1.sif"
+    // TODO: give choice between local and not ghcr
+    container 'oras://ghcr.io/citadel-test/r-citadel:4.5.1'
 
 
     input:
