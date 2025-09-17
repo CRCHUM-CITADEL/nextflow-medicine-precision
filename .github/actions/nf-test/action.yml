@@ -13,6 +13,9 @@ inputs:
   paths:
     description: "Test paths"
     required: true
+  github_token:
+    description: "GitHub token for private container auth"
+    required: true
   tags:
     description: "Tags to pass as argument for nf-test --tag parameter"
     required: false
@@ -22,7 +25,7 @@ runs:
     - name: Login to GHCR
       shell: bash
       run: |
-        echo ${{ secrets.GITHUB_TOKEN }} | apptainer remote login --username ${{ github.actor }} --password-stdin oras://ghcr.io
+        echo ${{ inputs.github_token }} | apptainer remote login --username ${{ github.actor }} --password-stdin oras://ghcr.io
 
     - name: Setup Nextflow
       uses: nf-core/setup-nextflow@v2
@@ -44,23 +47,6 @@ runs:
       if: contains(inputs.profile, 'apptainer')
       uses: eWaterCycle/setup-apptainer@main
 
-    - name: Set up Singularity
-      if: contains(inputs.profile, 'singularity')
-      shell: bash
-      run: |
-        mkdir -p $NXF_SINGULARITY_CACHEDIR
-        mkdir -p $NXF_SINGULARITY_LIBRARYDIR
-
-    - name: Conda setup
-      if: contains(inputs.profile, 'conda')
-      uses: conda-incubator/setup-miniconda@505e6394dae86d6a5c7fbb6e3fb8938e3e863830 # v3
-      with:
-        auto-update-conda: true
-        conda-solver: libmamba
-        conda-remove-defaults: true
-
-      # TODO Skip failing conda tests and document their failures
-      # https://github.com/nf-core/modules/issues/7017
     - name: Run nf-test
       shell: bash
       env:
