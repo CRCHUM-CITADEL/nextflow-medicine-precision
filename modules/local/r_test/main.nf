@@ -1,5 +1,6 @@
 process R_TEST {
-    container 'docker://ghcr.io/justinbellavance/r-citadel:v4.5.1'
+    // TODO: take this container as input (don't assume location)
+    container "$projectDir/containers/r-citadel_v4.5.1.sif"
 
 
     input:
