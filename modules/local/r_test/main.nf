@@ -1,7 +1,6 @@
 process R_TEST {
     // TODO: give choice between local and not ghcr
-    container 'oras://ghcr.io/citadel-test/r-citadel:4.5.1'
-
+    container "oras://ghcr.io/crchum-citadel/mdp-r:4.5.1"
 
     input:
     file samplesheet
