@@ -19,6 +19,10 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: Login to GHCR
+      run: |
+        echo ${{ secrets.GITHUB_TOKEN }} | apptainer remote login --username ${{ github.actor }} --password-stdin oras://ghcr.io
+
     - name: Setup Nextflow
       uses: nf-core/setup-nextflow@v2
       with:
