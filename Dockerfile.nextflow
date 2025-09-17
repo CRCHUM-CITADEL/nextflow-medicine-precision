@@ -6,6 +6,12 @@ RUN dnf -y update \
     && dnf clean all \
     && rm -rf /var/cache/dnf
 
+# install apptainer
+RUN dnf install -y https://github.com/apptainer/apptainer/releases/download/v1.4.2/apptainer-1.4.2-1.x86_64.rpm \
+    && dnf clean all \
+    && rm -rf /var/cache/dnf \
+    && apptainer -v
+
 # install latest pre-commit into python3.12 environment
 RUN python3.12 -m ensurepip --upgrade \
     && python3.12 -m pip install --no-cache-dir --upgrade pip \
