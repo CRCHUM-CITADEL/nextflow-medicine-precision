@@ -1,6 +1,6 @@
 process PYTHON_TEST {
     // TODO: give choice between local and not ghc
-    container "oras://ghcr.io/crchum-citadel/mdp-python:3.12"
+    container "oras://ghcr.io/crchum-citadel/sdp-python:3.12"
 
     input:
     file samplesheet
