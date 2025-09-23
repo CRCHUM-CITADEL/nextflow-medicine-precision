@@ -47,7 +47,7 @@ runs:
       env:
         NFT_WORKDIR: ${{ env.NFT_WORKDIR }}
       run: |
-        echo ${{ inputs.github_token }} | apptainer remote login --username ${{ github.actor }} --password-stdin oras://ghcr.io
+        echo ${{ inputs.github_token }} | apptainer registry login --username ${{ github.actor }} --password-stdin oras://ghcr.io
         nf-test test \
           --profile=+${{ inputs.profile }} \
           $(if [ -n "${{ inputs.tags }}" ]; then echo "--tag ${{ inputs.tags }}"; fi) \
