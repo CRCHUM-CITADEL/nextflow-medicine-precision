@@ -8,7 +8,7 @@ To run this pipeline, you first need to git clone this repository and enter the 
 git clone https://github.com/CRCHUM-CITADEL/nextflow-sante-precision.git && cd
 ```
 
-[!NOTE]
+> [!NOTE]
 > For all containers we are using Apptainer because of it's compatibility with HPC environments.
 > Find how to install here: https://apptainer.org/docs/admin/main/installation.html
 
@@ -18,7 +18,7 @@ In order to run nextflow with the exact software used to build the pipeline, pul
 apptainer pull --dir containers/ oras://ghcr.io/crchum-citadel/sdp-nextflow:25.04.7
 ```
 
-[!NOTE]
+> [!NOTE]
 > in order to pull from the github repository, you need to be have your credentials stored in your environment, and be a member of the crchum-citadel GitHub.
 > You will need to first create a <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens" target="_blank">PAT token with appropriate permissions</a>  
 > To authenticate:
@@ -43,7 +43,7 @@ To run the pipeline test (using minimal data):
 apptainer exec containers/sdp-nextflow_v25.04.7.sif nextflow run main.nf -profile test,apptainer
 ```
 
-[!NOTE]
+> [!NOTE]
 > Always run the pipeline with atleast the apptainer profile option, or else it won't work. (E.g. -profile apptainer)
 
 
@@ -60,14 +60,14 @@ apptainer exec \
     nf-core pipelines list
 ```
 
-[!NOTE]
+> [!NOTE]
 > You will likely want to create an alias in your ~/.bashrc file. In this file, include:
 > `alias nf-core="apptainer exec --bind $(pwd):$(pwd) --pwd $(pwd) docker://nfcore/tools:3.3.2 nf-core"`
 > (Don't forget to source and change versions when there's an update!)
 
 
 
-[!NOTE]
+> [!NOTE]
 > If you're looking to update the container registry, you need to:
 > 1. Build the image
 > `apptainer build <new_sif_file>.sif <def_file>.def`
@@ -77,7 +77,7 @@ apptainer exec \
 
 ## For developpers:
 
-[!IMPORTANT]
+> [!IMPORTANT]
 > Always make changes in the dev branch of the repository. To merge changes to the main branch, create a pull request and make sure all tests pass.
 > Alternatively, create an issue in the GitHub repository.
 
@@ -103,7 +103,7 @@ Pour exécuter ce pipeline, vous devez d'abord cloner ce dépôt Git et entrer d
 git clone https://github.com/CRCHUM-CITADEL/nextflow-sante-precision.git && cd
 ```
 
-[!NOTE]
+> [!NOTE]
 > Pour tous les conteneurs, nous utilisons Apptainer en raison de sa compatibilité avec les environnements HPC.
 > Trouvez comment l’installer ici : https://apptainer.org/docs/admin/main/installation.html
 
@@ -113,7 +113,7 @@ Afin d'exécuter Nextflow avec les logiciels exacts utilisés pour construire le
 apptainer pull --dir containers/ oras://ghcr.io/crchum-citadel/sdp-nextflow:25.04.7
 ```
 
-[!NOTE]
+> [!NOTE]
 > Pour télécharger depuis le dépôt GitHub, vous devez avoir vos identifiants enregistrés dans votre environnement et être membre du GitHub crchum-citadel.
 > Vous devrez d'abord créer un <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens" target="_blank">jeton PAT avec les permissions appropriées</a>  
 > Pour vous authentifier :
@@ -137,7 +137,7 @@ Pour exécuter le test du pipeline (avec des données minimales) :
 apptainer exec containers/sdp-nextflow_v25.04.7.sif nextflow run main.nf -profile test,apptainer
 ```
 
-[!NOTE]
+> [!NOTE]
 > Exécutez toujours le pipeline avec au moins l’option de profil `apptainer`, sinon cela ne fonctionnera pas. (Ex. : `-profile apptainer`)
 
 ## Fonctionnalité NF-Core
@@ -149,12 +149,12 @@ Selon la documentation, vous pouvez l’exécuter directement depuis le conteneu
 apptainer exec     --bind $(pwd):$(pwd)     --pwd $(pwd)     docker://nfcore/tools:3.3.2     nf-core pipelines list
 ```
 
-[!NOTE]
+> [!NOTE]
 > Vous voudrez probablement créer un alias dans votre fichier `~/.bashrc`. Dans ce fichier, incluez :
 > `alias nf-core="apptainer exec --bind $(pwd):$(pwd) --pwd $(pwd) docker://nfcore/tools:3.3.2 nf-core"`
 > (N’oubliez pas de faire un `source` et de changer la version lors des mises à jour !)
 
-[!NOTE]
+> [!NOTE]
 > Si vous souhaitez mettre à jour le registre de conteneurs, vous devez :
 > 1. Construire l’image :
 > `apptainer build <nouveau_fichier_sif>.sif <fichier_def>.def`
@@ -163,7 +163,7 @@ apptainer exec     --bind $(pwd):$(pwd)     --pwd $(pwd)     docker://nfcore/too
 
 ## Pour les développeurs :
 
-[!IMPORTANT]
+> [!IMPORTANT]
 > Faites toujours les modifications dans la branche `dev` du dépôt. Pour fusionner les changements dans la branche `main`, créez une pull request et assurez-vous que tous les tests passent.
 > Vous pouvez aussi créer une issue dans le dépôt GitHub.
 
