@@ -1,4 +1,4 @@
-# citadel-test/test: Output
+# CRCHUM-CITADEL/nextflow-sante-precision: Output
 
 ## Introduction
 

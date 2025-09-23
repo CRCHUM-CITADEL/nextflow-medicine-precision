@@ -1,5 +1,5 @@
 //
-// Subworkflow with functionality specific to the citadel-test/test pipeline
+// Subworkflow with functionality specific to the CRCHUM-CITADEL/nextflow-sante-precision pipeline
 //
 
 /*
