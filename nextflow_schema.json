@@ -1,7 +1,7 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://raw.githubusercontent.com/citadel-test/test//nextflow_schema.json",
-    "title": "citadel-test/test pipeline parameters",
+    "$id": "https://raw.githubusercontent.com/CRCHUM-CITADEL/nextflow-sante-precision//nextflow_schema.json",
+    "title": "CRCHUM-CITADEL/nextflow-sante-precision pipeline parameters",
     "description": "testing for citadel",
     "type": "object",
     "$defs": {

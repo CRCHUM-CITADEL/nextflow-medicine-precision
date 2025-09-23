@@ -4,7 +4,7 @@
             2,
             {
                 "Workflow": {
-                    "citadel-test/test": "v0.2.0dev"
+                    "CRCHUM-CITADEL/nextflow-sante-precision": "v0.2.0dev"
                 }
             },
             [

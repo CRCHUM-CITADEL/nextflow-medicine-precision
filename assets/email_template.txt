@@ -1,10 +1,10 @@
 Run Name: $runName
 
 <% if (success){
-    out << "## citadel-test/test execution completed successfully! ##"
+    out << "## CRCHUM-CITADEL/nextflow-sante-precision execution completed successfully! ##"
 } else {
     out << """####################################################
-## citadel-test/test execution completed unsuccessfully! ##
+## CRCHUM-CITADEL/nextflow-sante-precision execution completed unsuccessfully! ##
 ####################################################
 The exit status of the task that caused the workflow execution to fail was: $exitStatus.
 The full error message was:
@@ -27,5 +27,5 @@ Pipeline Configuration:
 <% out << summary.collect{ k,v -> " - $k: $v" }.join("\n") %>
 
 --
-citadel-test/test
-https://github.com/citadel-test/test
+CRCHUM-CITADEL/nextflow-sante-precision
+https://github.com/CRCHUM-CITADEL/nextflow-sante-precision
