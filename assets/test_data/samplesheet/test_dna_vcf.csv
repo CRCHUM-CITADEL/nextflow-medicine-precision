@@ -1,3 +1,3 @@
 group_id,subject_id,sample_id,sample_type,sequence_data,filetype,info,filepath
-subject_a,subject_a,subject_a.tumor,tumor,dna,vcf.gz,,vcf/subject_a.tumor.dna.bwa-mem2_2.2.1.markdups.vcf.gz
-subject_a,subject_a,subject_a.normal,normal,dna,vcf.gz,,vcf/subject_a.normal.dna.bwa-mem2_2.2.1.markdups.vcf.gz
+subject_a,subject_a,subject_a.tumor,tumor,dna,vcf.gz,,assets/test_data/vcf/subject_a.tumor.dna.bwa-mem2_2.2.1.markdups.vcf.gz
+subject_a,subject_a,subject_a.normal,normal,dna,vcf.gz,,assets/test_data/vcf/subject_a.normal.dna.bwa-mem2_2.2.1.markdups.vcf.gz

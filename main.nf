@@ -14,6 +14,7 @@
 */
 
 include { TEST } from './workflows/test.nf'
+include { }
 include { PIPELINE_INITIALISATION } from './subworkflows/local/utils_nfcore_test_pipeline'
 include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_test_pipeline'
 include { getGenomeAttribute      } from './subworkflows/local/utils_nfcore_test_pipeline'
@@ -49,6 +50,13 @@ workflow NFCORE_CITADEL_TEST {
         samplesheet
     )
 
+}
+
+workflow CITADEL_SANTE_DE_PRECISION {
+    take:
+    samplesheet
+
+    main: 
 }
 
 /*
