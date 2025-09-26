@@ -13,8 +13,9 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { TEST } from './workflows/test.nf'
-include { }
+include { TEST      } from './workflows/test.nf'
+include { GENOMIC   } from './workflows/genomic.nf'
+include { CLINICAL  } from './workflows/clinical.nf'
 include { PIPELINE_INITIALISATION } from './subworkflows/local/utils_nfcore_test_pipeline'
 include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_test_pipeline'
 include { getGenomeAttribute      } from './subworkflows/local/utils_nfcore_test_pipeline'
@@ -52,11 +53,28 @@ workflow NFCORE_CITADEL_TEST {
 
 }
 
-workflow CITADEL_SANTE_DE_PRECISION {
+workflow CLINICAL_PIPELINE {
     take:
     samplesheet
 
-    main: 
+    main:
+
+    CLINICAL (
+        samplesheet
+    )
+
+}
+
+workflow GENOMIC_PIPELINE {
+    take:
+    samplesheet
+
+    main:
+
+    GENOMIC (
+        samplesheet
+    )
+
 }
 
 /*
@@ -69,9 +87,21 @@ workflow {
 
     main:
 
+    // make sure mode is good
+    if (!params.mode){
+        error("ERROR: Pipeline mode not chosen in configuration file. Choices : 'genomic' or 'clinical'")
+    }
+    params.mode = params.mode.toLowerCase()
+    if ( !params.mode in ['genomic','clinical'] ) {
+        error("Error: Invalid pipeline mode chosen. Choices : 'Genomic' or 'Clinical'")
+    }
+
+    // make sure there's input
     if (!params.input){
         error("ERROR: Could not find samplesheet file. Not running any tests. Check input in nextflow.config")
     }
+
+
 
     //
     // SUBWORKFLOW: Run initialisation tasks
@@ -90,6 +120,14 @@ workflow {
     NFCORE_CITADEL_TEST (
         PIPELINE_INITIALISATION.out.samplesheet
     )
+    if (params.mode == 'genomic'){
+        GENOMIC_PIPELINE(PIPELINE_INITIALISATION.out.samplesheet)
+    }
+    else if (params.mode == 'clinical'){
+        CLINICAL_PIPELINE(PIPELINE_INITIALISATION.out.samplesheet)
+    }
+
+
     //
     // SUBWORKFLOW: Run completion tasks
     //

@@ -3,10 +3,10 @@ process PYTHON_TEST {
     container "oras://ghcr.io/crchum-citadel/sdp-python:3.12"
 
     input:
-    file samplesheet
+    path samplesheet
 
     output:
-    file "${samplesheet}_reversed_python.txt"
+    path "${samplesheet}_reversed_python.txt"
 
     script:
     """

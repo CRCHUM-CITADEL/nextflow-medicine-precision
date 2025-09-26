@@ -3,10 +3,10 @@ process R_TEST {
     container "oras://ghcr.io/crchum-citadel/sdp-r:4.5.1"
 
     input:
-    file samplesheet
+    path samplesheet
 
     output:
-    file "${samplesheet}_reversed_r.txt"
+    path "${samplesheet}_reversed_r.txt"
 
     script:
     """
