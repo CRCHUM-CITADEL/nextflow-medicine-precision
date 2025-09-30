@@ -8,6 +8,7 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
+include { validateParameters; samplesheetToList } from 'plugin/nf-schema'
 
 include { completionEmail           } from '../../nf-core/utils_nfcore_pipeline'
 include { completionSummary         } from '../../nf-core/utils_nfcore_pipeline'
@@ -26,9 +27,10 @@ workflow PIPELINE_INITIALISATION {
     take:
     version           // boolean: Display version and exit
     monochrome_logs   // boolean: Do not use coloured log outputs
-    nextflow_cli_args //   array: List of positional nextflow CLI args
-    outdir            //  string: The output directory where the results will be saved
-    input             //  string: Path to input samplesheet
+    nextflow_cli_args // array: List of positional nextflow CLI args
+    mode              // string: pipeline mode [clinical, genomic]
+    outdir            // string: The output directory where the results will be saved
+    input             // string: Path to input samplesheet
 
     main:
 
@@ -59,29 +61,19 @@ workflow PIPELINE_INITIALISATION {
     //
     // Create channel from input file provided through params.input
     //
+    if (mode == 'clinical'){
+        error("ERROR: Processing of clinical samplesheet not yet implemented")
+        
+        ch_samplesheet = Channel.fromList(samplesheetToList(input, "assets/schema_clinical_input.json"))
 
-    ch_samplesheet = Channel.fromPath(params.input)
-        // .splitCsv(header: true, strip: true)
-        // .map { row ->
-        //     [[id:row.sample], row.fastq_1, row.fastq_2]
-        // }
-        // .map {
-        //     meta, fastq_1, fastq_2 ->
-        //         if (!fastq_2) {
-        //             return [ meta.id, meta + [ single_end:true ], [ fastq_1 ] ]
-        //         } else {
-        //             return [ meta.id, meta + [ single_end:false ], [ fastq_1, fastq_2 ] ]
-        //         }
-        // }
-        // .groupTuple()
-        // .map { samplesheet ->
-        //     validateInputSamplesheet(samplesheet)
-        // }
-        // .map {
-        //     meta, fastqs ->
-        //         return [ meta, fastqs.flatten() ]
-        // }
-        // .set { ch_samplesheet }
+    } else if (mode == 'genomic'){
+
+        ch_samplesheet = Channel.fromList(samplesheetToList(input, "assets/schema_genomic_input.json"))
+
+    } else {
+        error("ERROR: This should not be possible, the mode check should have caught this. Killing pipeline.")
+    }
+
 
     emit:
     samplesheet = ch_samplesheet
@@ -144,7 +136,23 @@ workflow PIPELINE_COMPLETION {
 // Check and validate pipeline parameters
 //
 def validateInputParameters() {
-    genomeExistsError()
+    // genomeExistsError()
+
+    // check modes and input
+    if (!params.mode){
+        error("ERROR: Pipeline mode not chosen in configuration file. Choices : 'genomic' or 'clinical'")
+    }
+    params.mode = params.mode.toLowerCase()
+    if ( !params.mode in ['genomic','clinical'] ) {
+        error("Error: Invalid pipeline mode chosen. Choices : 'genomic' or 'clinical'")
+    }
+
+    // make sure there's input
+    if (!params.input){
+        error("ERROR: Could not find samplesheet file. Not running any tests. Check input in nextflow.config")
+    }
+
+
 }
 
 //
@@ -161,6 +169,17 @@ def validateInputSamplesheet(input) {
 
     return [ metas[0], fastqs ]
 }
+
+def validateGenomicInputSamplesheet(input) {
+    return []
+}
+
+def validateClinicalInputSamplesheet(input) {
+
+}
+
+
+
 //
 // Get attribute from genome config file e.g. fasta
 //
@@ -186,3 +205,4 @@ def genomeExistsError() {
         error(error_string)
     }
 }
+
