@@ -67,12 +67,14 @@ workflow CLINICAL_PIPELINE {
 
 workflow GENOMIC_PIPELINE {
     take:
-    ch_samplesheet
+    samplesheet_list
 
     main:
 
     GENOMIC (
-        ch_samplesheet
+        samplesheet_list,
+        params.ensembl_annotations,
+        params.gencode_annotations
     )
 
 }

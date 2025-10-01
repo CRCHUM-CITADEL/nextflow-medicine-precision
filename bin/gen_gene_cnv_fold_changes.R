@@ -120,6 +120,7 @@ result <- data.table()
 
 for (i in 1:nrow(vcf_data)) {
   cnv <- vcf_data[i, ]
+
   
   # Print progress every 10 CNVs
   if (i %% 10 == 0) {

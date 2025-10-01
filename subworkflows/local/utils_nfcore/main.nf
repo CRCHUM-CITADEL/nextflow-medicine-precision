@@ -8,7 +8,6 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { validateParameters; samplesheetToList } from 'plugin/nf-schema'
 
 include { completionEmail           } from '../../nf-core/utils_nfcore_pipeline'
 include { completionSummary         } from '../../nf-core/utils_nfcore_pipeline'
@@ -27,10 +26,9 @@ workflow PIPELINE_INITIALISATION {
     take:
     version           // boolean: Display version and exit
     monochrome_logs   // boolean: Do not use coloured log outputs
-    nextflow_cli_args // array: List of positional nextflow CLI args
-    mode              // string: pipeline mode [clinical, genomic]
-    outdir            // string: The output directory where the results will be saved
-    input             // string: Path to input samplesheet
+    nextflow_cli_args //   array: List of positional nextflow CLI args
+    outdir            //  string: The output directory where the results will be saved
+    input             //  string: Path to input samplesheet
 
     main:
 
@@ -56,35 +54,37 @@ workflow PIPELINE_INITIALISATION {
     //
     // Custom validation for pipeline parameters
     //
-    
     validateInputParameters()
-    validateParameters()
 
     //
     // Create channel from input file provided through params.input
     //
-    if (mode == 'clinical'){
-        error("ERROR: Processing of clinical samplesheet not yet implemented")
-        
-        samplesheet_list = Channel.fromList(samplesheetToList(input, "assets/schema_clinical_input.json"))
 
-    } else if (mode == 'genomic'){
-        if (!params.gencode_annotations){
-            error("ERROR: Missing gencode_annotations file (tsv format) Check input in nextflow.config")
-        }
-
-        if (!params.ensembl_annotations){
-            error("ERROR: Missing gencode_annotations file (tsv format) Check input in nextflow.config")
-        }
-
-        samplesheet_list = Channel.fromList(samplesheetToList(input, "assets/schema_genomic_input.json"))
-    } else {
-        error("ERROR: This should not be possible, the mode check should have caught this. Killing pipeline.")
-    }
-
+    ch_samplesheet = Channel.fromPath(params.input)
+        // .splitCsv(header: true, strip: true)
+        // .map { row ->
+        //     [[id:row.sample], row.fastq_1, row.fastq_2]
+        // }
+        // .map {
+        //     meta, fastq_1, fastq_2 ->
+        //         if (!fastq_2) {
+        //             return [ meta.id, meta + [ single_end:true ], [ fastq_1 ] ]
+        //         } else {
+        //             return [ meta.id, meta + [ single_end:false ], [ fastq_1, fastq_2 ] ]
+        //         }
+        // }
+        // .groupTuple()
+        // .map { samplesheet ->
+        //     validateInputSamplesheet(samplesheet)
+        // }
+        // .map {
+        //     meta, fastqs ->
+        //         return [ meta, fastqs.flatten() ]
+        // }
+        // .set { ch_samplesheet }
 
     emit:
-    samplesheet = samplesheet_list
+    samplesheet = ch_samplesheet
     versions    = ch_versions
 }
 
@@ -144,26 +144,23 @@ workflow PIPELINE_COMPLETION {
 // Check and validate pipeline parameters
 //
 def validateInputParameters() {
-    // genomeExistsError()
-
-    // check modes and input
-    if (!params.mode){
-        error("ERROR: Pipeline mode not chosen in configuration file. Choices : 'genomic' or 'clinical'")
-    }
-    params.mode = params.mode.toLowerCase()
-    if ( !params.mode in ['genomic','clinical'] ) {
-        error("Error: Invalid pipeline mode chosen. Choices : 'genomic' or 'clinical'")
-    }
-
-    // make sure there's input
-    if (!params.input){
-        error("ERROR: Could not find samplesheet file. Not running any tests. Check input in nextflow.config")
-    }
-
-
+    genomeExistsError()
 }
 
+//
+// Validate channels from input samplesheet
+//
+def validateInputSamplesheet(input) {
+    def (metas, fastqs) = input[1..2]
 
+    // Check that multiple runs of the same sample are of the same datatype i.e. single-end / paired-end
+    def endedness_ok = metas.collect{ meta -> meta.single_end }.unique().size == 1
+    if (!endedness_ok) {
+        error("Please check input samplesheet -> Multiple runs of a sample must be of the same datatype i.e. single-end or paired-end: ${metas[0].id}")
+    }
+
+    return [ metas[0], fastqs ]
+}
 //
 // Get attribute from genome config file e.g. fasta
 //
@@ -189,4 +186,3 @@ def genomeExistsError() {
         error(error_string)
     }
 }
-
