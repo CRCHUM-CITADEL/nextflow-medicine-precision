@@ -3,7 +3,9 @@
 (Traduction en francais suit)
 
 ## Clone
+
 To run this pipeline, you first need to git clone this repository and enter the directory:
+
 ```
 git clone https://github.com/CRCHUM-CITADEL/nextflow-sante-precision.git && cd
 ```
@@ -13,7 +15,9 @@ git clone https://github.com/CRCHUM-CITADEL/nextflow-sante-precision.git && cd
 > Find how to install here: https://apptainer.org/docs/admin/main/installation.html
 
 ## Pull nextflow container image
+
 In order to run nextflow with the exact software used to build the pipeline, pull the container image hosted on CITADEL's organisational Github (or if not in a member in crchum-citadel GitHub, ask for the location of the locally-stored .sif file.)
+
 ```
 apptainer pull --dir containers/ oras://ghcr.io/crchum-citadel/sdp-nextflow:25.04.7
 ```
@@ -25,20 +29,22 @@ apptainer pull --dir containers/ oras://ghcr.io/crchum-citadel/sdp-nextflow:25.0
 > `apptainer registry login --username <username> oras://ghcr.io`
 > You will be prompted for your PAT token.
 
-
 ## Run nextflow via apptainer
 
 Structure your command as such:
+
 ```
 apptainer exec containers/sdp-nextflow_<version>.sif nextflow <command>
 ```
 
 To get the version:
+
 ```
 apptainer exec containers/sdp-nextflow_v25.04.7.sif nextflow -v
 ```
 
 To run the pipeline test (using minimal data):
+
 ```
 apptainer exec containers/sdp-nextflow_v25.04.7.sif nextflow run main.nf -profile test,apptainer
 ```
@@ -46,12 +52,12 @@ apptainer exec containers/sdp-nextflow_v25.04.7.sif nextflow run main.nf -profil
 > [!NOTE]
 > Always run the pipeline with atleast the apptainer profile option, or else it won't work. (E.g. -profile apptainer)
 
-
 ## NF-Core functionality
 
 This pipeline was build from a nf-core template. You may want to use some nf-core CLI functionality.
 
 According to the documentation, you can run directly from the container:
+
 ```
 apptainer exec \
     --bind $(pwd):$(pwd) \
@@ -65,15 +71,13 @@ apptainer exec \
 > `alias nf-core="apptainer exec --bind $(pwd):$(pwd) --pwd $(pwd) docker://nfcore/tools:3.3.2 nf-core"`
 > (Don't forget to source and change versions when there's an update!)
 
-
-
 > [!NOTE]
 > If you're looking to update the container registry, you need to:
+>
 > 1. Build the image
-> `apptainer build <new_sif_file>.sif <def_file>.def`
+>    `apptainer build <new_sif_file>.sif <def_file>.def`
 > 2. Push the image:
-> `apptainer push <new_sif_file>.sif oras://ghcr.io/crchum-citadel/<name>:<version>`
-
+>    `apptainer push <new_sif_file>.sif oras://ghcr.io/crchum-citadel/<name>:<version>`
 
 ## For developpers:
 
@@ -81,14 +85,16 @@ apptainer exec \
 > Always make changes in the dev branch of the repository. To merge changes to the main branch, create a pull request and make sure all tests pass.
 > Alternatively, create an issue in the GitHub repository.
 
-### Other functionalities: 
+### Other functionalities:
 
 To run nf-test:
+
 ```
 apptainer exec containers/nextflow-citadel_v25.04.7.sif nf-test test --profile apptainer
 ```
 
 To run pre-commit (to check linting before pull request):
+
 ```
 apptainer exec containers/nextflow-citadel_v25.04.7.sif pre-commit run .
 ```
@@ -98,7 +104,9 @@ apptainer exec containers/nextflow-citadel_v25.04.7.sif pre-commit run .
 Documentation de démarrage (Traduction en français)
 
 ## Cloner le dépôt
+
 Pour exécuter ce pipeline, vous devez d'abord cloner ce dépôt Git et entrer dans le répertoire :
+
 ```
 git clone https://github.com/CRCHUM-CITADEL/nextflow-sante-precision.git && cd
 ```
@@ -108,7 +116,9 @@ git clone https://github.com/CRCHUM-CITADEL/nextflow-sante-precision.git && cd
 > Trouvez comment l’installer ici : https://apptainer.org/docs/admin/main/installation.html
 
 ## Télécharger l’image du conteneur Nextflow
+
 Afin d'exécuter Nextflow avec les logiciels exacts utilisés pour construire le pipeline, téléchargez l'image du conteneur hébergée sur le GitHub organisationnel de CITADEL (ou si vous n'êtes pas membre du GitHub crchum-citadel, demandez l'emplacement du fichier .sif stocké localement).
+
 ```
 apptainer pull --dir containers/ oras://ghcr.io/crchum-citadel/sdp-nextflow:25.04.7
 ```
@@ -123,16 +133,19 @@ apptainer pull --dir containers/ oras://ghcr.io/crchum-citadel/sdp-nextflow:25.0
 ## Exécuter Nextflow via Apptainer
 
 Structurez votre commande comme suit :
+
 ```
 apptainer exec containers/sdp-nextflow_<version>.sif nextflow <commande>
 ```
 
 Pour obtenir la version :
+
 ```
 apptainer exec containers/sdp-nextflow_v25.04.7.sif nextflow -v
 ```
 
 Pour exécuter le test du pipeline (avec des données minimales) :
+
 ```
 apptainer exec containers/sdp-nextflow_v25.04.7.sif nextflow run main.nf -profile test,apptainer
 ```
@@ -145,6 +158,7 @@ apptainer exec containers/sdp-nextflow_v25.04.7.sif nextflow run main.nf -profil
 Ce pipeline a été construit à partir d’un modèle nf-core. Vous pouvez vouloir utiliser certaines fonctionnalités de la CLI nf-core.
 
 Selon la documentation, vous pouvez l’exécuter directement depuis le conteneur :
+
 ```
 apptainer exec     --bind $(pwd):$(pwd)     --pwd $(pwd)     docker://nfcore/tools:3.3.2     nf-core pipelines list
 ```
@@ -156,10 +170,11 @@ apptainer exec     --bind $(pwd):$(pwd)     --pwd $(pwd)     docker://nfcore/too
 
 > [!NOTE]
 > Si vous souhaitez mettre à jour le registre de conteneurs, vous devez :
+>
 > 1. Construire l’image :
-> `apptainer build <nouveau_fichier_sif>.sif <fichier_def>.def`
+>    `apptainer build <nouveau_fichier_sif>.sif <fichier_def>.def`
 > 2. Pousser l’image :
-> `apptainer push <nouveau_fichier_sif>.sif oras://ghcr.io/crchum-citadel/<nom>:<version>`
+>    `apptainer push <nouveau_fichier_sif>.sif oras://ghcr.io/crchum-citadel/<nom>:<version>`
 
 ## Pour les développeurs :
 
@@ -170,11 +185,13 @@ apptainer exec     --bind $(pwd):$(pwd)     --pwd $(pwd)     docker://nfcore/too
 ### Autres fonctionnalités :
 
 Pour exécuter `nf-test` :
+
 ```
 apptainer exec containers/nextflow-citadel_v25.04.7.sif nf-test test --profile apptainer
 ```
 
 Pour exécuter `pre-commit` (pour vérifier le linting avant une pull request) :
+
 ```
 apptainer exec containers/nextflow-citadel_v25.04.7.sif pre-commit run .
 ```

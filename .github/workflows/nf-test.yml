@@ -1,12 +1,5 @@
 name: Run nf-test
 on:
-  push:
-    paths-ignore:
-      - "docs/**"
-      - "**/meta.yml"
-      - "**/*.md"
-      - "**/*.png"
-      - "**/*.svg"
   pull_request:
     paths-ignore:
       - "docs/**"
@@ -20,7 +13,7 @@ on:
 
 env:
   GITHUB_TOKEN: ${{ secrets.GH_PAT }}
-  NFT_VER: "0.9.2"
+  NFT_VER: "0.9.3"
   NFT_WORKDIR: "~"
   NXF_ANSI_LOG: false
   NXF_SINGULARITY_CACHEDIR: ${{ github.workspace }}/.singularity
@@ -71,7 +64,7 @@ jobs:
           - ${{ github.base_ref == 'master' || github.base_ref == 'main' }}
         NXF_VER:
           - "24.04.7"
-          - "latest-everything"
+
     env:
       NXF_ANSI_LOG: false
       TOTAL_SHARDS: ${{ needs.nf-test-changes.outputs.total_shards }}

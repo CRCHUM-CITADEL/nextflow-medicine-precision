@@ -13,10 +13,12 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { TEST } from './workflows/test.nf'
-include { PIPELINE_INITIALISATION } from './subworkflows/local/utils_nfcore_test_pipeline'
-include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_test_pipeline'
-include { getGenomeAttribute      } from './subworkflows/local/utils_nfcore_test_pipeline'
+include { TEST      } from './workflows/test.nf'
+include { GENOMIC   } from './workflows/genomic.nf'
+include { CLINICAL  } from './workflows/clinical.nf'
+include { PIPELINE_INITIALISATION } from './subworkflows/local/utils'
+include { PIPELINE_COMPLETION     } from './subworkflows/local/utils'
+// include { getGenomeAttribute      } from './subworkflows/local/utils'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -27,7 +29,7 @@ include { getGenomeAttribute      } from './subworkflows/local/utils_nfcore_test
 // TODO nf-core: Remove this line if you don't need a FASTA file
 //   This is an example of how to use getGenomeAttribute() to fetch parameters
 //   from igenomes.config using `--genome`
-params.fasta = getGenomeAttribute('fasta')
+// params.fasta = getGenomeAttribute('fasta')
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -39,14 +41,40 @@ params.fasta = getGenomeAttribute('fasta')
 // WORKFLOWS : Run main pipeline.
 //
 
-workflow NFCORE_CITADEL_TEST {
+// workflow NFCORE_CITADEL_TEST {
+//     take:
+//     samplesheet
+
+//     main:
+
+//     TEST (
+//         samplesheet
+//     )
+
+// }
+
+workflow CLINICAL_PIPELINE {
     take:
-    samplesheet
+    ch_samplesheet
 
     main:
 
-    TEST (
-        samplesheet
+    CLINICAL (
+        ch_samplesheet
+    )
+
+}
+
+workflow GENOMIC_PIPELINE {
+    take:
+    samplesheet_list
+
+    main:
+
+    GENOMIC (
+        samplesheet_list,
+        params.ensembl_annotations,
+        params.gencode_annotations
     )
 
 }
@@ -61,17 +89,14 @@ workflow {
 
     main:
 
-    if (!params.input){
-        error("ERROR: Could not find samplesheet file. Not running any tests. Check input in nextflow.config")
-    }
-
     //
-    // SUBWORKFLOW: Run initialisation tasks
+    // SUBWORKFLOW: Run initialisation tasks and checks
     //
     PIPELINE_INITIALISATION (
         params.version,
         params.monochrome_logs,
         args,
+        params.mode,
         params.outdir,
         params.input
     )
@@ -79,9 +104,17 @@ workflow {
     //
     // WORKFLOW: Run main workflow
     //
-    NFCORE_CITADEL_TEST (
-        PIPELINE_INITIALISATION.out.samplesheet
-    )
+    // NFCORE_CITADEL_TEST (
+    //     PIPELINE_INITIALISATION.out.samplesheet
+    // )
+    if (params.mode == 'genomic'){
+        GENOMIC_PIPELINE(PIPELINE_INITIALISATION.out.samplesheet)
+    }
+    else if (params.mode == 'clinical'){
+        CLINICAL_PIPELINE(PIPELINE_INITIALISATION.out.samplesheet)
+    }
+
+
     //
     // SUBWORKFLOW: Run completion tasks
     //
