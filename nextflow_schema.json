@@ -124,12 +124,12 @@
         "fasta": {
             "type": "string"
         },
-        "ensembl_annotations" :{
+        "ensembl_annotations": {
             "type": "string",
             "format": "file-path",
             "pattern": "^\\S+\\.tsv"
         },
-        "gencode_annotations" :{
+        "gencode_annotations": {
             "type": "string",
             "format": "file-path",
             "pattern": "^\\S+\\.gtf"

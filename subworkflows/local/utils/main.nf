@@ -56,7 +56,7 @@ workflow PIPELINE_INITIALISATION {
     //
     // Custom validation for pipeline parameters
     //
-    
+
     validateInputParameters()
     validateParameters()
 
@@ -65,7 +65,7 @@ workflow PIPELINE_INITIALISATION {
     //
     if (mode == 'clinical'){
         error("ERROR: Processing of clinical samplesheet not yet implemented")
-        
+
         samplesheet_list = Channel.fromList(samplesheetToList(input, "assets/schema_clinical_input.json"))
 
     } else if (mode == 'genomic'){
@@ -189,4 +189,3 @@ def genomeExistsError() {
         error(error_string)
     }
 }
-

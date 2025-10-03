@@ -16,8 +16,8 @@ workflow CLINICAL {
     take:
     clinical_samplesheet
 
-    main: 
-    
+    main:
+
     //
     // TASK: Aggregate software versions
     //

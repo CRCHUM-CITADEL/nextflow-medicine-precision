@@ -11,7 +11,7 @@ process EXTRACT_GENE_CNV_FOLD_CHANGES {
 
     output:
       path "*.genes.cnv.tsv"
-      
+
 
     script:
     """

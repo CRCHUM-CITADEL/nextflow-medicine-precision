@@ -21,8 +21,8 @@ workflow GENOMIC {
         ensembl_annotations
         gencode_annotations
 
-    main: 
-    
+    main:
+
         ch_versions = Channel.empty()
 
         // create a channel of only the ID and filepath
