@@ -8,7 +8,7 @@ inputs:
     description: "Shard number for this CI job"
     required: true
   total_shards:
-    description: "Total number of test shards(NOT the total number of matrix jobs)"
+    description: "Total number of test shards (NOT the total number of matrix jobs)"
     required: true
   paths:
     description: "Test paths"
