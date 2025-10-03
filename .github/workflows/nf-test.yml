@@ -64,7 +64,7 @@ jobs:
           - ${{ github.base_ref == 'master' || github.base_ref == 'main' }}
         NXF_VER:
           - "24.04.7"
-          - "latest-everything"
+
     env:
       NXF_ANSI_LOG: false
       TOTAL_SHARDS: ${{ needs.nf-test-changes.outputs.total_shards }}

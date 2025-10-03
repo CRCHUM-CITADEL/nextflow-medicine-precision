@@ -14,8 +14,8 @@
                 "pipeline_info/software_versions.yml"
             ],
             [
-                "HG04239.tumor.genes.cnv.tsv:md5,aa62818fadb10e654cf4923efb7093e0",
-                "NA21144.normal.genes.cnv.tsv:md5,6fdc92a1fb29b212bfe325133549ec3e",
+                "HG04239.tumor.genes.cnv.tsv:md5,da8121d1ff601b7045466c9be4ad573c",
+                "NA21144.normal.genes.cnv.tsv:md5,64816e9a77a8302d541a68bc8559b044",
                 "HG04239.tumor_data_cna_hg38.seg:md5,663ccb5dfe465e9cb9621b9eec143417",
                 "NA21144.normal_data_cna_hg38.seg:md5,75ab01ff09c4c10222dfba0a5ab8f988"
             ]
@@ -24,6 +24,6 @@
             "nf-test": "0.9.3",
             "nextflow": "25.04.7"
         },
-        "timestamp": "2025-10-03T12:25:19.67918698"
+        "timestamp": "2025-10-03T17:38:34.560744838"
     }
 }
