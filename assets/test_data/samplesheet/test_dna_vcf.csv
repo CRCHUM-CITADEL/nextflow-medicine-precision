@@ -1,3 +1,3 @@
 group_id,subject_id,sample_id,sample_type,sequence_data,filetype,info,filepath
-HG,HG04239,HG04239.tumor,tumor,dna,vcf.gz,,assets/test_data/vcf/HG04239.final.cnv.vcf.gz
-NA,NA21144,NA21144.normal,normal,dna,vcf.gz,,assets/test_data/vcf/NA21144.final.cnv.vcf.gz
+HG,HG04239,HG04239.tumor,tumor,dna,vcf.gz,,/home/justb11/scratch/citadel/nextflow-sante-precision/assets/test_data/vcf/HG04239.final.cnv.vcf.gz
+NA,NA21144,NA21144.normal,normal,dna,vcf.gz,,/home/justb11/scratch/citadel/nextflow-sante-precision/assets/test_data/vcf/NA21144.final.cnv.vcf.gz

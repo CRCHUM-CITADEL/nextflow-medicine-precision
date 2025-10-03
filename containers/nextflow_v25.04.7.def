@@ -27,16 +27,27 @@ From: rockylinux:8.9
 
     wget -qO- https://get.nf-test.com | bash
     mv nf-test /usr/local/bin/nf-test
+
+    cp -r /root/.nf-test /usr/local/lib/
+
+    # move to lib then replace paths in nf-test script so you can use it without root
+    sed -i \
+        -e 's|^\s*APP_HOME\s*=.*|APP_HOME="/usr/local/lib/.nf-test"|' \
+        -e 's|^\s*APP_JAR\s*=.*|APP_JAR="nf-test.jar"|' \
+        /usr/local/bin/nf-test
+
     nf-test version
 
+
 %environment
-    export NXT_VER=25.04.6
+    export NXT_VER=25.04.7
     export PATH=/usr/local/bin:$PATH
     # Set JAVA_HOME (adjust if paths differ)
     export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-$(uname -m)
 
+
 %labels
-    Version 25.04.6
+    Version 25.04.7
     Description Nextflow + nf-test + pre-commit on RockyLinux 8.10
 
 %runscript
