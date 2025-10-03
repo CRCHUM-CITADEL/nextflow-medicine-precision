@@ -51,7 +51,6 @@
             "type": "string",
             "pattern": "^\\S+\\.vcf\\.gz$",
             "errorMessage": "Filepath to genomic data must be provided and must have extension '.vcf.gz'",
-            "format": "file-path",
             "meta": "file"
         }
     },

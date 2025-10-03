@@ -28,7 +28,7 @@ workflow GENOMIC {
         // create a channel of only the ID and filepath
         ch_vcf = samplesheet_list
             .map { rec ->
-                tuple(rec[0].sample, rec[0].file)
+                tuple(rec[0].sample, "${params.input_dir}/${rec[0].file}")
             }
 
         ch_vcf.view()
