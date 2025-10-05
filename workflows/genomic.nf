@@ -12,8 +12,6 @@ include { GENOMIC_CNV } from '../subworkflows/local/genomic_cnv'
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-
-
 workflow GENOMIC {
 
     take:
@@ -25,18 +23,32 @@ workflow GENOMIC {
 
         ch_versions = Channel.empty()
 
-        // create a channel of only the ID and filepath
-        ch_vcf = samplesheet_list
+        // Create a channel where each record has: sample, filepath, pipeline label
+        ch_vcf_all = samplesheet_list
             .map { rec ->
-                tuple(rec[0].sample, "${params.input_dir}/${rec[0].file}")
+                def sample = rec[0].sample
+                def file = "${params.input_dir}/${rec[0].file}"
+                // assume rec[0].pipeline exists (or derive it somehow)
+                def pipeline = rec[0].pipeline  // e.g. "cnv", "rna", etc.
+                return tuple(sample, file, pipeline)
             }
 
-        ch_vcf.view()
+        ch_vcf_all.view()
+
+        // Filter out only the ones for the “cnv” pipeline
+        ch_vcf_cnv = ch_vcf_all
+            .filter { sample, file, pipeline ->
+                pipeline == 'cnv'
+            }
+            // then drop the pipeline field (if GENOMIC_CNV expects only sample + file)
+            .map { sample, file, pipeline ->
+                tuple(sample, file)
+            }
 
         GENOMIC_CNV(
-            ch_vcf,
+            ch_vcf_cnv,
             ensembl_annotations
-            )
+        )
 
         //
         // TASK: Aggregate software versions
