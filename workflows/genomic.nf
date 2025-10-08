@@ -5,6 +5,7 @@
 */
 include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pipeline'
 include { GENOMIC_CNV } from '../subworkflows/local/genomic_cnv'
+include { GENOMIC_SV } from '../subworkflows/local/genomic_sv'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -48,6 +49,20 @@ workflow GENOMIC {
         GENOMIC_CNV(
             ch_vcf_cnv,
             ensembl_annotations
+        )
+
+        // Filter out only the ones for the “sv” pipeline
+        ch_vcf_sv = ch_vcf_all
+            .filter { sample, file, pipeline ->
+                pipeline == 'sv'
+            }
+            // then drop the pipeline field
+            .map { sample, file, pipeline ->
+                tuple(sample, file)
+            }
+
+        GENOMIC_SV(
+            ch_vcf_sv,
         )
 
         //

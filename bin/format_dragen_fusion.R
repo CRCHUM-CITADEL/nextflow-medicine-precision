@@ -1,3 +1,5 @@
+#!/usr/bin/env Rscript
+
 # Load necessary libraries
 library(dplyr)
 library(stringr)

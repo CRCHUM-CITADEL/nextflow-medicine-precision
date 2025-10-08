@@ -9,7 +9,6 @@ process DRAGEN_FUSION_SV_TO_CBIOPORTAL {
     output:
         path "*.data_sv.txt"
 
-
     script:
     """
     format_dragen_fusion.R \
