@@ -13,7 +13,6 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { TEST      } from './workflows/test.nf'
 include { GENOMIC   } from './workflows/genomic.nf'
 include { CLINICAL  } from './workflows/clinical.nf'
 include { PIPELINE_INITIALISATION } from './subworkflows/local/utils'
@@ -65,19 +64,19 @@ workflow CLINICAL_PIPELINE {
 
 }
 
-workflow GENOMIC_PIPELINE {
-    take:
-    samplesheet_list
+// workflow GENOMIC_PIPELINE {
+//     take:
+//     samplesheet_list
 
-    main:
+//     main:
 
-    GENOMIC (
-        samplesheet_list,
-        params.ensembl_annotations,
-        params.gencode_annotations
-    )
+//     GENOMIC (
+//         samplesheet_list,
+//         params.ensembl_annotations,
+//         params.gencode_annotations
+//     )
 
-}
+// }
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -108,10 +107,16 @@ workflow {
     //     PIPELINE_INITIALISATION.out.samplesheet
     // )
     if (params.mode == 'genomic'){
-        GENOMIC_PIPELINE(PIPELINE_INITIALISATION.out.samplesheet)
+        // GENOMIC_PIPELINE(PIPELINE_INITIALISATION.out.samplesheet)
+        GENOMIC (
+            PIPELINE_INITIALISATION.out.samplesheet,
+            params.ensembl_annotations,
+            params.gencode_annotations
+        )
     }
     else if (params.mode == 'clinical'){
         CLINICAL_PIPELINE(PIPELINE_INITIALISATION.out.samplesheet)
+
     }
 
 

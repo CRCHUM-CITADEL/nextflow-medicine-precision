@@ -1,9 +1,11 @@
 {
     "-profile test": {
         "content": [
-            4,
+            5,
             null,
             [
+                "dragen",
+                "dragen/HG04239.tumor.data_sv.txt",
                 "extract",
                 "extract/HG04239.tumor.genes.cnv.tsv",
                 "extract/NA21144.normal.genes.cnv.tsv",
@@ -14,16 +16,17 @@
                 "pipeline_info/software_versions.yml"
             ],
             [
+                "HG04239.tumor.data_sv.txt:md5,f835e9d62f23fb678f36b2c6755750d2",
                 "HG04239.tumor.genes.cnv.tsv:md5,da8121d1ff601b7045466c9be4ad573c",
                 "NA21144.normal.genes.cnv.tsv:md5,64816e9a77a8302d541a68bc8559b044",
-                "HG04239.tumor_data_cna_hg38.seg:md5,663ccb5dfe465e9cb9621b9eec143417",
-                "NA21144.normal_data_cna_hg38.seg:md5,75ab01ff09c4c10222dfba0a5ab8f988"
+                "HG04239.tumor_data_cna_hg38.seg:md5,c4e928090c35ef3ab7c565541e176f20",
+                "NA21144.normal_data_cna_hg38.seg:md5,ba7cb54902b574295416ef8524ef98ce"
             ]
         ],
         "meta": {
             "nf-test": "0.9.3",
             "nextflow": "25.04.7"
         },
-        "timestamp": "2025-10-03T17:38:34.560744838"
+        "timestamp": "2025-10-08T08:40:53.484904959"
     }
 }

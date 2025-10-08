@@ -11,3 +11,4 @@ testing*
 null/
 containers/*.sif
 output/
+assets/test_data/vcf/*.final.*
