@@ -11,6 +11,6 @@ workflow GENOMIC_SV {
             sv_vcf
         )
 
-    emit: 
+    emit:
         cbioportal_genomic_sv
 }

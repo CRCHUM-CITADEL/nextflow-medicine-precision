@@ -8,9 +8,9 @@ library(optparse)
 
 # Set up command line argument options
 option_list <- list(
-  make_option(c("-i", "--input"), type="character", default=NULL, 
+  make_option(c("-i", "--input"), type="character", default=NULL,
               help="Input fusion candidates file path", metavar="FILE"),
-  make_option(c("-o", "--output"), type="character", default="data_sv.txt", 
+  make_option(c("-o", "--output"), type="character", default="data_sv.txt",
               help="Output file path [default= %default]", metavar="FILE"),
   make_option(c("-s", "--sample"), type="character", default=NULL,
               help="Sample ID to use (if not provided, will extract from input filename)")
@@ -29,12 +29,12 @@ if (is.null(opt$input)) {
 convert_to_cbioportal <- function(input_file, output_file, sample_id = NULL) {
   # Read the RNA fusion file
   fusions <- read_tsv(input_file)
-  
+
   # Get sample ID from filename if not provided
   if (is.null(sample_id)) {
     sample_id <- str_replace(basename(input_file), "\\.RNA\\.fusion_candidates\\.final\\.txt$", "-1RT")
   }
-  
+
   # Initialize output dataframe
   cbioportal_data <- data.frame(
     Sample_Id = rep(sample_id, nrow(fusions)),
@@ -65,27 +65,27 @@ convert_to_cbioportal <- function(input_file, output_file, sample_id = NULL) {
     Tumor_Paired_End_Read_Count = NA,
     stringsAsFactors = FALSE
   )
-  
+
   # Process each fusion
   for (i in 1:nrow(fusions)) {
     # Handle column name with possible # prefix
     fusion_column <- if("#FusionGene" %in% names(fusions)) "#FusionGene" else names(fusions)[1]
-    
+
     # Split fusion gene name
     genes <- str_split(fusions[[fusion_column]][i], "--", simplify = TRUE)
     gene1 <- genes[1]
     gene2 <- genes[2]
-    
+
     # Extract chromosome and position information
     left_bp <- str_split(fusions$LeftBreakpoint[i], ":", simplify = TRUE)
     right_bp <- str_split(fusions$RightBreakpoint[i], ":", simplify = TRUE)
-    
+
     # Remove "chr" prefix if present
     chr1 <- str_remove(left_bp[1], "^chr")
     pos1 <- left_bp[2]
     chr2 <- str_remove(right_bp[1], "^chr")
     pos2 <- right_bp[2]
-    
+
     # Set SV class
     sv_class <- "SV"
 
@@ -102,18 +102,18 @@ convert_to_cbioportal <- function(input_file, output_file, sample_id = NULL) {
     cbioportal_data$Tumor_Split_Read_Count[i] <- fusions$NumSplitReads[i]
     cbioportal_data$Tumor_Paired_End_Read_Count[i] <- fusions$NumPairedReads[i]
   }
-  
+
   # Write output to file
   #print(nrow(cbioportal_data))
   #print(head(cbioportal_data))
   #print(nrow(unique(cbioportal_data)))
   #print(colnames(cbioportal_data))
   write_tsv(cbioportal_data[!duplicated(cbioportal_data[, 20:24]),], output_file)
-  
+
   # Print summary
   cat(sprintf("Processed %d fusions from %s\n", nrow(fusions), input_file))
   cat(sprintf("Output written to %s\n", output_file))
-  
+
   return(cbioportal_data)
 }
 
