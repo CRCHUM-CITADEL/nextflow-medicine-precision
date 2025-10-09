@@ -40,7 +40,7 @@
             "filetype": {
                 "type": "string",
                 "errorMessage": "filetype must be provided and be one of 'vcf.gz'",
-                "enum": ["cnv", "sv"],
+                "enum": ["cnv", "sv", "expression"],
                 "meta": "pipeline"
             },
             "info": {
@@ -49,7 +49,7 @@
             },
             "filepath": {
                 "type": "string",
-                "pattern": "^\\S+\\.(?:vcf\\.gz|final)$",
+                "pattern": "^\\S+\\.(?:vcf\\.gz|final|sf)$",
                 "errorMessage": "Filepath to genomic data must be provided and must have extension '.vcf.gz'",
                 "meta": "file"
             }

@@ -15,10 +15,8 @@ suppressPackageStartupMessages({
 # Define command line options
 option_list <- list(
   # Input parameters
-  make_option(c("-i", "--input_dir"), type="character", default=NULL,
-              help="Directory containing expression files [required]"),
-  make_option(c("-p", "--pattern"), type="character", default="*_expression.tsv",
-              help="File pattern to match expression files [default=%default]"),
+  make_option(c("-i", "--input_files"), type="character", default=NULL,
+              help="Comma-separated list of expression file paths [required]"),
   make_option(c("--sample_ids"), type="character", default=NULL,
               help="Comma-separated list of sample IDs (overrides extraction from filenames)"),
   make_option("--use_file_numbers", action="store_true", default=FALSE,
@@ -50,42 +48,40 @@ opt_parser <- OptionParser(option_list=option_list,
 opt <- parse_args(opt_parser)
 
 # Check for required arguments
-if (is.null(opt$input_dir)) {
+if (is.null(opt$input_files)) {
   print_help(opt_parser)
-  stop("--input_dir argument is required.", call.=FALSE)
+  stop("--input_files argument is required.", call.=FALSE)
 }
 
 # Validate options
-if (!dir.exists(opt$input_dir)) {
-  stop("Input directory does not exist: ", opt$input_dir, call.=FALSE)
-}
-
 if (!opt$fill_missing %in% c("NA", "0")) {
   warning("fill_missing should be 'NA' or '0'. Using 'NA'.")
   opt$fill_missing <- "NA"
 }
 
+# Parse input file list
+expression_files <- strsplit(opt$input_files, ",")[[1]]
+expression_files <- trimws(expression_files)  # Remove any whitespace
+
+# Validate that files exist
+missing_files <- expression_files[!file.exists(expression_files)]
+if (length(missing_files) > 0) {
+  stop("The following input files do not exist:\n  ", 
+       paste(missing_files, collapse="\n  "), call.=FALSE)
+}
+
+if (length(expression_files) == 0) {
+  stop("No expression files provided.", call.=FALSE)
+}
+
 # Display configuration
 cat("Configuration:\n")
-cat("- Input directory: ", opt$input_dir, "\n")
-cat("- File pattern: ", opt$pattern, "\n")
+cat("- Number of input files: ", length(expression_files), "\n")
 cat("- Output matrix file: ", opt$output_file, "\n")
 cat("- Output meta file: ", opt$output_meta, "\n")
 cat("- Fill missing values with: ", opt$fill_missing, "\n")
 cat("- Cancer study ID: ", opt$study_id, "\n")
 cat("\n")
-
-# Step 1: Find all expression files
-cat("Searching for expression files...\n")
-expression_files <- list.files(
-  path = opt$input_dir,
-  pattern = opt$pattern,
-  full.names = TRUE
-)
-
-if (length(expression_files) == 0) {
-  stop("No expression files found matching pattern: ", opt$pattern, call.=FALSE)
-}
 
 cat("Found", length(expression_files), "expression files:\n")
 for (file in expression_files) {
@@ -98,6 +94,7 @@ if (!is.null(opt$sample_ids)) {
   # Option 1: Use manually specified sample IDs
   cat("Using manually specified sample IDs\n")
   sample_ids <- strsplit(opt$sample_ids, ",")[[1]]
+  sample_ids <- trimws(sample_ids)  # Remove any whitespace
   
   # Check if count matches
   if (length(sample_ids) != length(expression_files)) {
