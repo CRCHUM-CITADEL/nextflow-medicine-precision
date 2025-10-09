@@ -14,6 +14,16 @@ workflow GENOMIC_EXPRESSION {
             )
 
         // TODO : merge files
+        tpm_file_list = tpm_file_ch
+            .collect()
+            .map { files ->
+                if (files.size() < 2) {
+                    log.warn "GENOMIC_EXPRESSION: Found ${files.size()} TPM file(s). Need at least 2 files to merge. Skipping merge step."
+                    return null
+                }
+                return files
+            }
+            .filter { it != null }
 
         tpm_file_list = tpm_file_ch.collect()
 
