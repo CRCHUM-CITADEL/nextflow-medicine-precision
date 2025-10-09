@@ -19,11 +19,11 @@ option_list <- list(
               help="Path to gene_id_to_name.tsv file [required]"),
   make_option(c("-s", "--sample_id"), type="character", default="Sample1",
               help="Sample identifier [default=%default]"),
-  
+
   # Output file
   make_option(c("-o", "--output"), type="character", default="expression_data.txt",
               help="Path to output expression data file [default=%default]"),
-  
+
   # Processing options
   make_option("--min_tpm", type="double", default=0,
               help="Minimum TPM threshold (0 = no filtering) [default=%default]"),
@@ -32,7 +32,7 @@ option_list <- list(
 )
 
 # Parse command line arguments
-opt_parser <- OptionParser(option_list=option_list, 
+opt_parser <- OptionParser(option_list=option_list,
                            description="Converts Dragen TPM values to gene symbol format",
                            usage="usage: %prog [options]")
 opt <- parse_args(opt_parser)
@@ -59,7 +59,7 @@ expr_data <- read_tsv(opt$input, show_col_types = FALSE)
 
 cat("Reading gene ID to name mapping...\n")
 # Read the gene_id_to_name.tsv file without headers
-gene_map <- read_tsv(opt$gene_map, 
+gene_map <- read_tsv(opt$gene_map,
                      col_names = c("ensembl_id", "gene_symbol"),
                      show_col_types = FALSE)
 

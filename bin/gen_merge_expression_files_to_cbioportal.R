@@ -21,13 +21,13 @@ option_list <- list(
               help="Comma-separated list of sample IDs (overrides extraction from filenames)"),
   make_option("--use_file_numbers", action="store_true", default=FALSE,
               help="Use sequential numbers as sample IDs instead of extracting from filenames [default=%default]"),
-  
+
   # Output parameters
   make_option(c("-o", "--output_file"), type="character", default="merged_expression.txt",
               help="Output file for merged expression matrix [default=%default]"),
   make_option(c("-m", "--output_meta"), type="character", default="meta_merged_expression.txt",
               help="Output metadata file [default=%default]"),
-  
+
   # Processing options
   make_option(c("-f", "--fill_missing"), type="character", default="NA",
               help="Value to use for missing genes (NA or 0) [default=%default]"),
@@ -42,7 +42,7 @@ option_list <- list(
 )
 
 # Parse command line arguments
-opt_parser <- OptionParser(option_list=option_list, 
+opt_parser <- OptionParser(option_list=option_list,
                            description="Merges multiple expression files into a single matrix for cBioPortal",
                            usage="usage: %prog [options]")
 opt <- parse_args(opt_parser)
@@ -66,7 +66,7 @@ expression_files <- trimws(expression_files)  # Remove any whitespace
 # Validate that files exist
 missing_files <- expression_files[!file.exists(expression_files)]
 if (length(missing_files) > 0) {
-  stop("The following input files do not exist:\n  ", 
+  stop("The following input files do not exist:\n  ",
        paste(missing_files, collapse="\n  "), call.=FALSE)
 }
 
@@ -95,35 +95,35 @@ if (!is.null(opt$sample_ids)) {
   cat("Using manually specified sample IDs\n")
   sample_ids <- strsplit(opt$sample_ids, ",")[[1]]
   sample_ids <- trimws(sample_ids)  # Remove any whitespace
-  
+
   # Check if count matches
   if (length(sample_ids) != length(expression_files)) {
-    stop("Number of specified sample IDs (", length(sample_ids), 
+    stop("Number of specified sample IDs (", length(sample_ids),
          ") does not match number of files (", length(expression_files), ")", call.=FALSE)
   }
-  
+
   cat("Sample IDs:\n")
   for (i in 1:length(sample_ids)) {
     cat(sprintf("  - File %d: %s → %s\n", i, basename(expression_files[i]), sample_ids[i]))
   }
-  
+
 } else if (opt$use_file_numbers) {
   # Option 2: Use sequential numbers as sample IDs
   cat("Using sequential numbers as sample IDs\n")
   sample_ids <- paste0("Sample", seq_along(expression_files))
-  
+
   cat("Sample IDs:\n")
   for (i in 1:length(sample_ids)) {
     cat(sprintf("  - File %d: %s → %s\n", i, basename(expression_files[i]), sample_ids[i]))
   }
-  
+
 } else {
   # Option 3: Simply use everything before "_expression.tsv" as the sample ID
   cat("Using filename prefix before '_expression.tsv' as sample ID\n")
-  
+
   sample_ids <- basename(expression_files) %>%
     str_replace("\\.tpm\\.tsv$", "")
-  
+
   cat("Sample IDs:\n")
   for (i in 1:length(sample_ids)) {
     cat(sprintf("  - %s → %s\n", basename(expression_files[i]), sample_ids[i]))
@@ -141,13 +141,13 @@ cat("Reading and merging expression files...\n")
 # Function to read a single expression file
 read_expr_file <- function(file_path, sample_id) {
   df <- read_tsv(file_path, show_col_types = FALSE)
-  
+
   # If using column header for sample name
   if (opt$sample_column) {
     # Keep only Hugo_Symbol and the sample column (the second column)
     df <- df %>%
       select(Hugo_Symbol, 2)
-    
+
     # Rename the second column to the sample ID from filename
     colnames(df)[2] <- sample_id
   } else {
@@ -155,7 +155,7 @@ read_expr_file <- function(file_path, sample_id) {
     # Rename the second column to the sample ID from filename
     colnames(df)[2] <- sample_id
   }
-  
+
   return(df)
 }
 
@@ -173,48 +173,48 @@ if (!all_identical) {
   cat("!!! WARNING: Gene lists are NOT identical across all samples                  !!!\n")
   cat("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n")
   cat("\n")
-  
+
   # Count genes in each sample
   gene_counts <- map_int(gene_lists, length)
   names(gene_counts) <- sample_ids
-  
+
   cat("Gene counts by sample:\n")
   for (i in 1:length(gene_counts)) {
     cat(sprintf("  - %-20s: %d genes\n", names(gene_counts)[i], gene_counts[i]))
   }
-  
+
   # Find common genes across all samples
   common_genes <- Reduce(intersect, gene_lists)
   cat("\nCommon genes across all samples:", length(common_genes), "\n")
-  
+
   # Find unique genes (in any sample but not all)
   all_genes <- unique(unlist(gene_lists))
   unique_genes <- setdiff(all_genes, common_genes)
   cat("Genes present in some but not all samples:", length(unique_genes), "\n")
-  
+
   # Show example of unique genes
   if (length(unique_genes) > 0) {
     sample_unique <- unique_genes[1:min(5, length(unique_genes))]
     cat("Examples of genes not present in all samples:\n")
-    
+
     for (gene in sample_unique) {
       present_in <- sample_ids[map_lgl(gene_lists, function(genes) gene %in% genes)]
       missing_from <- setdiff(sample_ids, present_in)
-      
-      cat(sprintf("  - %s: present in %d samples, missing from %d samples\n", 
+
+      cat(sprintf("  - %s: present in %d samples, missing from %d samples\n",
                  gene, length(present_in), length(missing_from)))
-      
+
       if (length(missing_from) <= 5) {
         cat("     Missing from:", paste(missing_from, collapse=", "), "\n")
       }
     }
   }
-  
+
   cat("\nPossible causes:\n")
   cat("  - Different gene filtering criteria used across samples\n")
   cat("  - Some samples processed with different annotation versions\n")
   cat("  - Missing data in some samples\n")
-  
+
   cat("\nRecommendation:\n")
   cat("  - Check that all samples were processed with the same parameters\n")
   cat("  - Verify that annotation files are consistent\n")
@@ -231,7 +231,7 @@ merged_expression <- expression_list[[1]]
 for (i in 2:length(expression_list)) {
   merged_expression <- merged_expression %>%
     full_join(expression_list[[i]], by = "Hugo_Symbol")
-  
+
   cat("  - Merged", i, "of", length(expression_list), "files\n")
 }
 

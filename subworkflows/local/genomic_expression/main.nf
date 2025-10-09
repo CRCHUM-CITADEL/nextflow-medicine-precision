@@ -4,7 +4,7 @@ include { MERGE_EXPRESSION_FILES_TO_CBIOPORTAL } from '../../../modules/local/me
 workflow GENOMIC_EXPRESSION {
     take:
         somatic_expression // tuple (sample_id, filepath)
-        gencode_annotations // gene annotation file 
+        gencode_annotations // gene annotation file
 
     main:
 
