@@ -1,7 +1,7 @@
 {
     "-profile test": {
         "content": [
-            5,
+            8,
             null,
             [
                 "dragen",
@@ -10,8 +10,13 @@
                 "extract/HG04239.tumor.genes.cnv.tsv",
                 "extract/NA21144.normal.genes.cnv.tsv",
                 "gene",
-                "gene/output/HG04239.tumor_data_cna_hg38.seg",
-                "gene/output/NA21144.normal_data_cna_hg38.seg",
+                "gene/HG04239.tumor_data_cna_hg38.seg",
+                "gene/NA21144.normal_data_cna_hg38.seg",
+                "get",
+                "get/HG04239.tumor.tpm.tsv",
+                "get/HG04239_2.tumor.tpm.tsv",
+                "merge",
+                "merge/data_expression.txt",
                 "pipeline_info",
                 "pipeline_info/software_versions.yml"
             ],
@@ -20,13 +25,16 @@
                 "HG04239.tumor.genes.cnv.tsv:md5,da8121d1ff601b7045466c9be4ad573c",
                 "NA21144.normal.genes.cnv.tsv:md5,64816e9a77a8302d541a68bc8559b044",
                 "HG04239.tumor_data_cna_hg38.seg:md5,c4e928090c35ef3ab7c565541e176f20",
-                "NA21144.normal_data_cna_hg38.seg:md5,ba7cb54902b574295416ef8524ef98ce"
+                "NA21144.normal_data_cna_hg38.seg:md5,ba7cb54902b574295416ef8524ef98ce",
+                "HG04239.tumor.tpm.tsv:md5,8422c8e8322aa5fe3287ec2718676ff2",
+                "HG04239_2.tumor.tpm.tsv:md5,883e3f3cd26c5adbd6adea468936fc82",
+                "data_expression.txt:md5,e644d424c6e99eb0d3fda5a38d441e67"
             ]
         ],
         "meta": {
             "nf-test": "0.9.3",
             "nextflow": "25.04.7"
         },
-        "timestamp": "2025-10-08T08:40:53.484904959"
+        "timestamp": "2025-10-09T13:52:54.237898973"
     }
 }
