@@ -3,7 +3,7 @@
 process EXTRACT_GENE_CNV_FOLD_CHANGES {
     tag { sample_id }   // helps logging/tracing per sample
 
-    container "oras://ghcr.io/crchum-citadel/sdp-r:4.5.1"
+    container params.container_r
 
     input:
       tuple val(sample_id), path(somatic_cnv_vcf)      // one sample id + corresponding vcf.gz file

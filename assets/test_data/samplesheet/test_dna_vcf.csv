@@ -2,3 +2,5 @@ group_id,subject_id,sample_id,sample_type,sequence_data,filetype,info,filepath
 HG,HG04239,HG04239.tumor,tumor,dna,cnv,,assets/test_data/vcf/HG04239.chr21.cnv.vcf.gz
 NA,NA21144,NA21144.normal,normal,dna,cnv,,assets/test_data/vcf/NA21144.chr21.cnv.vcf.gz
 HG,HG04239,HG04239.tumor,tumor,rna,sv,,assets/test_data/rna_fusion/HG04239.fusion_candidates.final
+HG,HG04239,HG04239.tumor,tumor,rna,expression,,assets/test_data/expression/HG04239.quant.genes.sf
+HG,HG04239_2,HG04239_2.tumor,tumor,rna,expression,,assets/test_data/expression/HG04239_2.quant.genes.sf

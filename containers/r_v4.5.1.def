@@ -3,7 +3,7 @@ From: rocker/r-ver:4.5.1
 
 %post
     # update and install base packages
-    R -e "install.packages(c('ggplot2', 'dplyr', 'data.table', 'optparse', 'stringr'))"
+    R -e "install.packages(c('ggplot2', 'dplyr', 'tidyr', 'data.table', 'optparse', 'stringr', 'purrr', 'readr'))"
 
 %environment
     export PATH=/usr/local/bin:$PATH
