@@ -4,8 +4,7 @@ process INTEGRATE_RNA_VARIANTS {
     container params.container_r
 
     input:
-    tuple val(sample_id), path(som_rna_vcf)
-    path(som_dna_vcf)
+    tuple val(sample_id), path(som_rna_vcf), path(som_dna_maf)
 
 
     output:
@@ -13,8 +12,8 @@ process INTEGRATE_RNA_VARIANTS {
 
     script:
     """
-    integrate_rna_variants.R \
-        -d $som_dna_vcf \
+    gen_integrate_rna_variants.R \
+        -d $som_dna_maf \
         -r $som_rna_vcf \
         -o ${sample_id}.somatic_rna.maf \
         --min_depth=3 --min_vaf=0.05

@@ -1,8 +1,7 @@
+// modified to allow vcf.gz and vcf (10/10/2025)
 process VCF2MAF {
-
     tag "$meta.id"
     label 'process_low'
-
     // WARN: Version information not provided by tool on CLI. Please update version string below when bumping container versions.
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
@@ -10,21 +9,22 @@ process VCF2MAF {
         'community.wave.seqera.io/library/ensembl-vep_vcf2maf:2d40b60b4834af73' }"
 
     input:
-    tuple val(meta), path(vcf) // Use an uncompressed VCF file!
-    path fasta                 // Required
-    path vep_cache             // Required for VEP running. A default of /.vep is supplied.
+        tuple val(meta), path(vcf) // Now accepts both compressed (.vcf.gz) and uncompressed (.vcf) files
+        path fasta                 // Required
+        path vep_cache             // Required for VEP running. A default of /.vep is supplied.
+        val vep_params
 
     output:
-    tuple val(meta), path("*.maf"), emit: maf
-    path "versions.yml"           , emit: versions
+        tuple val(meta), path("*.maf"), emit: maf
+        path "versions.yml"           , emit: versions
 
     when:
-    task.ext.when == null || task.ext.when
+        task.ext.when == null || task.ext.when
 
     script:
     def args          = task.ext.args   ?: ''
     def prefix        = task.ext.prefix ?: "${meta.id}"
-    def vep_cache_cmd = vep_cache       ? "--vep-data $vep_cache" : ""     // If VEP is present, it will find it and add it to commands otherwise blank
+    def vep_cache_cmd = vep_cache       ? "--vep-data $vep_cache $vep_params" : ""     // If VEP is present, it will find it and add it to commands otherwise blank
     def VERSION       = '1.6.22' // WARN: Version information not provided by tool on CLI. Please update this string when bumping container versions.
     """
     if [ "$vep_cache" ]; then
@@ -35,12 +35,24 @@ process VCF2MAF {
         VEP_VERSION=""
     fi
 
+    echo -e "\$VEP_VERSION"
+
+    # Handle compressed VCF files
+    if [[ $vcf == *.gz ]]; then
+        tmp=\$(mktemp --suffix=.vcf)
+        rm -f "\$tmp" 
+        gunzip -c "$vcf" > "\$tmp"
+        INPUT_VCF="\$tmp"
+    else
+        INPUT_VCF="$vcf"
+    fi
+
     vcf2maf.pl \\
         $args \\
         \$VEP_CMD \\
         $vep_cache_cmd \\
         --ref-fasta $fasta \\
-        --input-vcf $vcf \\
+        --input-vcf \$INPUT_VCF \\
         --output-maf ${prefix}.maf
 
     cat <<-END_VERSIONS > versions.yml
