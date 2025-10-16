@@ -10,7 +10,7 @@ process GENE_CNV_FOLD_CHANGES_TO_CBIOPORTAL {
     path fold_changes_per_gene_cnv
 
     output:
-    path "*_data_cna_hg38.seg"
+    path "${sample_id}_data_cna_hg38.seg"
 
     script:
     """

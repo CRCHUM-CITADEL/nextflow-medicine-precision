@@ -9,10 +9,13 @@ process PCGR {
         path ref_data
 
     output:
-    path "*" //TODO: specify output format
+    path "${sample_id}.cpsr.grch38.classification.tsv.gz" //TODO: specify output format
 
     script:
     """
+    # tabix vcf
+    tabix -p vcf $ger_dna_vcf
+
     cpsr \
     --input_vcf $ger_dna_vcf \
     --vep_dir $vep_cache \

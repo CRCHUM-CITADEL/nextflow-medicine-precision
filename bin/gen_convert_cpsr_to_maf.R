@@ -46,7 +46,37 @@ convert_cpsr_to_maf <- function(cpsr_file, maf_file, output_file) {
   
   # Read the CPSR file
   cpsr_data <- read.delim(cpsr_file, stringsAsFactors=FALSE)
-  
+
+  # Check if CPSR file is empty (only header, no data)
+  if (nrow(cpsr_data) == 0) {
+    cat("WARNING: CPSR file contains only headers with no data rows. Creating empty output file.\n")
+    
+    # Read existing MAF to preserve structure
+    maf_data <- read.delim(maf_file, comment.char="#", stringsAsFactors=FALSE)
+    maf_lines <- readLines(maf_file)
+    
+    # Determine header structure
+    if (starts_with(maf_lines[1], "#version")) {
+      header_line <- maf_lines[2]
+      data_start <- 3
+    } else {
+      header_line <- maf_lines[1]
+      data_start <- 2
+    }
+    
+    # Write output with existing MAF data only
+    output_con <- file(output_file, "w")
+    if (starts_with(maf_lines[1], "#version")) {
+      writeLines(maf_lines[1], output_con)
+    }
+    writeLines(header_line, output_con)
+    writeLines(maf_lines[data_start:length(maf_lines)], output_con)
+    close(output_con)
+    
+    cat("Output file created with existing MAF data only.\n")
+    quit(status = 0)
+  }
+    
   # Check column names in the CPSR file to determine format
   cpsr_columns <- colnames(cpsr_data)
   cat("CPSR file columns detected:", length(cpsr_columns), "\n")

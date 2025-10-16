@@ -52,12 +52,17 @@ workflow {
             ? Channel.fromPath(params.vep_cache, type: 'dir', checkIfExists: true)
             : Channel.empty()
 
+        ch_pcgr_data = params.pcgr_data && params.pcgr_data != '' 
+            ? Channel.fromPath(params.pcgr_data, type: 'dir', checkIfExists: true)
+            : Channel.empty()
+
         GENOMIC (
             PIPELINE_INITIALISATION.out.samplesheet,
             params.ensembl_annotations,
             params.gencode_annotations,
             ch_vep_cache,
-            params.genome_reference
+            params.genome_reference,
+            ch_pcgr_data
         )
     }
     else if (params.mode == 'clinical'){

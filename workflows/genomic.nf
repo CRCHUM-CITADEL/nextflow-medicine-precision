@@ -23,6 +23,7 @@ workflow GENOMIC {
         gencode_annotations
         vep_cache
         fasta
+        pcgr_data
 
     main:
 
@@ -84,7 +85,7 @@ workflow GENOMIC {
         //     gencode_annotations
         // )
 
-        ch_vcf_gen_ger_rna = ch_vcf_all
+        ch_vcf_gen_ger_dna = ch_vcf_all
             .filter { sample, file, pipeline, sequence ->
                 pipeline == 'hard_filtered' && sequence == "germinal_dna"
             }
@@ -117,7 +118,8 @@ workflow GENOMIC {
             ch_vcf_gen_som_dna,
             ch_vcf_gen_som_rna,
             fasta,
-            vep_cache
+            vep_cache,
+            pcgr_data
         )
 
         //
