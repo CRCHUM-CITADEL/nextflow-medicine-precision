@@ -1,4 +1,7 @@
 process DRAGEN_FUSION_SV_TO_CBIOPORTAL {
+    publishDir "${params.outdir}/${sample_id}", mode: 'copy'
+
+    
     tag { sample_id }
 
     container params.container_r

@@ -1,4 +1,5 @@
 process CONVERT_CPSR_TO_MAF {
+    publishDir "${params.outdir}/${sample_id}", mode: 'copy'
 
     tag { sample_id }
 

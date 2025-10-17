@@ -41,49 +41,49 @@ workflow GENOMIC {
 
         ch_vcf_all.view()
 
-        // // Filter out only the ones for the “cnv” pipeline
-        // ch_vcf_cnv = ch_vcf_all
-        //     .filter { sample, file, pipeline ->
-        //         pipeline == 'cnv'
-        //     }
-        //     // then drop the pipeline field (if GENOMIC_CNV expects only sample + file)
-        //     .map { sample, file, pipeline ->
-        //         tuple(sample, file)
-        //     }
+        // Filter out only the ones for the “cnv” pipeline
+        ch_vcf_cnv = ch_vcf_all
+            .filter { sample, file, pipeline, sequence ->
+                pipeline == 'cnv'
+            }
+            // then drop the pipeline field (if GENOMIC_CNV expects only sample + file)
+            .map { sample, file, pipeline, sequence ->
+                tuple(sample, file)
+            }
 
-        // GENOMIC_CNV(
-        //     ch_vcf_cnv,
-        //     ensembl_annotations
-        // )
+        GENOMIC_CNV(
+            ch_vcf_cnv,
+            ensembl_annotations
+        )
 
-        // // Filter out only the ones for the “sv” pipeline
-        // ch_vcf_sv = ch_vcf_all
-        //     .filter { sample, file, pipeline ->
-        //         pipeline == 'sv'
-        //     }
-        //     // then drop the pipeline field
-        //     .map { sample, file, pipeline ->
-        //         tuple(sample, file)
-        //     }
+        // Filter out only the ones for the “sv” pipeline
+        ch_vcf_sv = ch_vcf_all
+            .filter { sample, file, pipeline, sequence ->
+                pipeline == 'sv'
+            }
+            // then drop the pipeline field
+            .map { sample, file, pipeline, sequence ->
+                tuple(sample, file)
+            }
 
-        // GENOMIC_SV(
-        //     ch_vcf_sv
-        // )
+        GENOMIC_SV(
+            ch_vcf_sv
+        )
 
-        // // Filter out only the ones for the “expression” pipeline
-        // ch_vcf_expression = ch_vcf_all
-        //     .filter { sample, file, pipeline ->
-        //         pipeline == 'expression'
-        //     }
-        //     // then drop the pipeline field
-        //     .map { sample, file, pipeline ->
-        //         tuple(sample, file)
-        //     }
+        // Filter out only the ones for the “expression” pipeline
+        ch_vcf_expression = ch_vcf_all
+            .filter { sample, file, pipeline, sequence ->
+                pipeline == 'expression'
+            }
+            // then drop the pipeline field
+            .map { sample, file, pipeline, sequence ->
+                tuple(sample, file)
+            }
 
-        // GENOMIC_EXPRESSION(
-        //     ch_vcf_expression,
-        //     gencode_annotations
-        // )
+        GENOMIC_EXPRESSION(
+            ch_vcf_expression,
+            gencode_annotations
+        )
 
         ch_vcf_gen_ger_dna = ch_vcf_all
             .filter { sample, file, pipeline, sequence ->

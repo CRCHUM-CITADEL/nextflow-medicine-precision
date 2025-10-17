@@ -1,4 +1,5 @@
 process GENE_CNV_FOLD_CHANGES_TO_CBIOPORTAL {
+    publishDir "${params.outdir}/${sample_id}", mode: 'copy'
 
     // use sample_id for logging
     tag { sample_id }
