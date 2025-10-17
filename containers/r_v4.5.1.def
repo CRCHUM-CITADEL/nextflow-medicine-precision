@@ -4,9 +4,9 @@ From: rocker/r-ver:4.5.1
 %post
     # update and install base packages
     R -e "install.packages(c(
-    'ggplot2', 
-    'dplyr', 
-    'tidyr', 
+    'ggplot2',
+    'dplyr',
+    'tidyr',
     'data.table',
     'optparse',
     'stringr',

@@ -16,7 +16,7 @@ option_list <- list(
   make_option(c("--min_vaf"), type="double", default=0.03, help="Minimum RNA VAF to consider a variant expressed [default: %default]")
 )
 
-opt_parser <- OptionParser(option_list=option_list, 
+opt_parser <- OptionParser(option_list=option_list,
                           usage="Usage: %prog [options] or %prog -d dna.maf -r rna.vcf -o output.maf --min_depth=10 --min_vaf=0.03",
                           description="Integrate RNA-seq variant information into DNA MAF file")
 opt <- parse_args(opt_parser)
@@ -27,11 +27,11 @@ if (length(args) >= 3 && is.null(opt$dna) && is.null(opt$rna) && is.null(opt$out
   opt$dna <- args[1]
   opt$rna <- args[2]
   opt$output <- args[3]
-  
+
   if (length(args) >= 4) {
     opt$min_depth <- as.integer(args[4])
   }
-  
+
   if (length(args) >= 5) {
     opt$min_vaf <- as.numeric(args[5])
   }
@@ -58,7 +58,7 @@ message("  Min RNA VAF: ", MIN_RNA_VAF)
 
 # Read DNA MAF file
 message("Reading DNA MAF file...")
-dna_maf <- fread(dna_maf_file, sep="\t", header=TRUE, stringsAsFactors=FALSE, 
+dna_maf <- fread(dna_maf_file, sep="\t", header=TRUE, stringsAsFactors=FALSE,
                  quote="", fill=TRUE, skip="Hugo_Symbol", data.table=FALSE)
 
 # Read RNA VCF file
@@ -85,15 +85,15 @@ extract_format_value <- function(format_def, format_val, field_name) {
   # Split both fields
   format_fields <- unlist(strsplit(format_def, ":"))
   sample_values <- unlist(strsplit(format_val, ":"))
-  
+
   # Find the position of the desired field
   field_pos <- which(format_fields == field_name)
-  
+
   # Return NA if field not found or if the sample data doesn't contain the field
   if (length(field_pos) == 0 || field_pos > length(sample_values)) {
     return(NA)
   }
-  
+
   # Return the value
   return(sample_values[field_pos])
 }
@@ -134,7 +134,7 @@ rna_variants <- rna_variants %>%
     t_ref_count_rna = sapply(ad_split, function(x) if(length(x) >= 1) as.numeric(x[1]) else NA),
     t_alt_count_rna = sapply(ad_split, function(x) if(length(x) >= 2) as.numeric(x[2]) else NA)
   ) %>%
-  select(chr_raw, Chromosome, Start_Position, Reference_Allele, Variant_Allele, 
+  select(chr_raw, Chromosome, Start_Position, Reference_Allele, Variant_Allele,
          t_depth_rna, t_vaf_rna, t_ref_count_rna, t_alt_count_rna)
 
 # Also normalize chromosome in DNA data
@@ -167,8 +167,8 @@ message("Setting expression flags...")
 matched_variants <- matched_variants %>%
   mutate(
     Flag_RNA_Expressed = case_when(
-      !is.na(t_depth_rna) & !is.na(t_vaf_rna) & 
-        as.numeric(t_depth_rna) >= MIN_RNA_DEPTH & 
+      !is.na(t_depth_rna) & !is.na(t_vaf_rna) &
+        as.numeric(t_depth_rna) >= MIN_RNA_DEPTH &
         as.numeric(t_vaf_rna) >= MIN_RNA_VAF ~ 1,
       TRUE ~ NA_real_
     )
@@ -186,7 +186,7 @@ matched_variants$rna_info <- sapply(1:nrow(matched_variants), function(i) {
 
   if (!is.na(depth)) {
     paste0(
-      "RNA(d=", depth, 
+      "RNA(d=", depth,
       ",v=", ifelse(is.na(vaf), "NA", round(as.numeric(vaf), 2)),
       ",filt=", ifelse(expressed == 1, "YES", "NO"), ")"
     )
@@ -235,11 +235,11 @@ writeLines(new_header, output_maf_file)
 # Append data
 fwrite(
   matched_variants[, output_cols, drop = FALSE],
-  output_maf_file, 
-  sep = "\t", 
+  output_maf_file,
+  sep = "\t",
   append = TRUE,
-  quote = FALSE, 
-  col.names = FALSE, 
+  quote = FALSE,
+  col.names = FALSE,
   row.names = FALSE
 )
 
@@ -254,7 +254,7 @@ message("Total RNA variants with VAF: ", sum(!is.na(rna_variants$t_vaf_rna)))
 expressed_variants <- sum(matched_variants$Flag_RNA_Expressed == 1, na.rm = TRUE)
 no_rna_data_variants <- sum(is.na(matched_variants$Flag_RNA_Expressed))
 
-message("DNA variants expressed in RNA: ", expressed_variants, " (", 
+message("DNA variants expressed in RNA: ", expressed_variants, " (",
         round(expressed_variants/nrow(dna_maf)*100, 1), "%)")
-message("DNA variants with no RNA data: ", no_rna_data_variants, " (", 
+message("DNA variants with no RNA data: ", no_rna_data_variants, " (",
         round(no_rna_data_variants/nrow(dna_maf)*100, 1), "%)")

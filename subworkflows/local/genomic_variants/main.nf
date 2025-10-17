@@ -18,7 +18,7 @@ workflow GENOMIC_VARIANTS {
 
         DOWNLOAD_VEP_TEST()
         DOWNLOAD_PCGR()
-        
+
         // Combine both channels and take the first available
         ch_vep_data = vep_cache
             .mix(DOWNLOAD_VEP_TEST.out.cache_dir)
@@ -32,7 +32,7 @@ workflow GENOMIC_VARIANTS {
             def meta = [ id: id ]
             return tuple(meta, vcf)
         }
-        
+
         VCF2MAF(
             som_dna_vcf_input,
             fasta,

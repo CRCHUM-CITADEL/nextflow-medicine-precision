@@ -47,12 +47,12 @@ workflow {
     //     PIPELINE_INITIALISATION.out.samplesheet
     // )
     if (params.mode == 'genomic'){
-        
-        ch_vep_cache = params.vep_cache && params.vep_cache != '' 
+
+        ch_vep_cache = params.vep_cache && params.vep_cache != ''
             ? Channel.fromPath(params.vep_cache, type: 'dir', checkIfExists: true)
             : Channel.empty()
 
-        ch_pcgr_data = params.pcgr_data && params.pcgr_data != '' 
+        ch_pcgr_data = params.pcgr_data && params.pcgr_data != ''
             ? Channel.fromPath(params.pcgr_data, type: 'dir', checkIfExists: true)
             : Channel.empty()
 
