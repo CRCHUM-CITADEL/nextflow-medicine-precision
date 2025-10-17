@@ -5,7 +5,7 @@ include { CONVERT_CPSR_TO_MAF } from '../../../modules/local/convert_cpsr_to_maf
 include { DOWNLOAD_VEP_TEST } from '../../../modules/local/download_vep_test'
 include { DOWNLOAD_PCGR } from '../../../modules/local/download_pcgr'
 
-workflow GENOMIC_VARIANTS {
+workflow GENOMIC_MUTATIONS {
     take:
         ger_dna_vcf // tuple (sample_id, filepath)
         som_dna_vcf // tuple (sample_id, filepath)
@@ -58,12 +58,15 @@ workflow GENOMIC_VARIANTS {
             ch_pcgr_data
         )
 
-        cbioportal_genomic_variants = CONVERT_CPSR_TO_MAF (
+        cbioportal_genomic_mutation_files = CONVERT_CPSR_TO_MAF (
             som_dna_rna_maf,
             ger_dna_tsv
         )
 
+        cbioportal_genomic_mutations_merged = cbioportal_genomic_mutation_files.collectFile( name : 'data_mutations_dna_rna_germline.txt', storeDir: "${params.outdir}", keepHeader : true, skip: 1)
+
+
     emit:
-        cbioportal_genomic_variants
+        cbioportal_genomic_mutations_merged
 
 }

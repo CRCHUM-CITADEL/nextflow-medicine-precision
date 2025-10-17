@@ -7,7 +7,7 @@ include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pi
 include { GENOMIC_CNV } from '../subworkflows/local/genomic_cnv'
 include { GENOMIC_SV } from '../subworkflows/local/genomic_sv'
 include { GENOMIC_EXPRESSION } from '../subworkflows/local/genomic_expression'
-include { GENOMIC_VARIANTS } from '../subworkflows/local/genomic_variants'
+include { GENOMIC_MUTATIONS } from '../subworkflows/local/genomic_mutations'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -113,7 +113,7 @@ workflow GENOMIC {
                 tuple(sample, file)
             }
 
-        GENOMIC_VARIANTS(
+        GENOMIC_MUTATIONS(
             ch_vcf_gen_ger_dna,
             ch_vcf_gen_som_dna,
             ch_vcf_gen_som_rna,
