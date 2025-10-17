@@ -1,0 +1,31 @@
+{
+    "-profile test": {
+        "content": [
+            12,
+            null,
+            [
+                "HG04239.tumor",
+                "HG04239.tumor/HG04239.tumor.data_sv.txt",
+                "HG04239.tumor/HG04239.tumor.somatic_rna_germline.maf",
+                "HG04239.tumor/HG04239.tumor_data_cna_hg38.seg",
+                "NA21144.normal",
+                "NA21144.normal/NA21144.normal_data_cna_hg38.seg",
+                "data_expression.txt",
+                "pipeline_info",
+                "pipeline_info/software_versions.yml"
+            ],
+            [
+                "HG04239.tumor.data_sv.txt:md5,f835e9d62f23fb678f36b2c6755750d2",
+                "HG04239.tumor.somatic_rna_germline.maf:md5,99d8a138b8555fa56cc2bc9413fe4df0",
+                "HG04239.tumor_data_cna_hg38.seg:md5,c4e928090c35ef3ab7c565541e176f20",
+                "NA21144.normal_data_cna_hg38.seg:md5,ba7cb54902b574295416ef8524ef98ce",
+                "data_expression.txt:md5,5997b48cfdf3ac1dab887fdf48505cfb"
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.04.7"
+        },
+        "timestamp": "2025-10-17T10:16:06.117813797"
+    }
+}
