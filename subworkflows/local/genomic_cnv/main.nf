@@ -18,7 +18,8 @@ workflow GENOMIC_CNV {
             fold_change_per_gene_cnv
             )
 
-        cbioportal_genomic_cnv_merged = cbioportal_genomic_cnv_files.collectFile( name : 'data_cna_hg38.seg', storeDir: "${params.outdir}", keepHeader : true, skip: 1)
+        cbioportal_genomic_cnv_merged = cbioportal_genomic_cnv_files
+            .collectFile( name : 'data_cna_hg38.seg', storeDir: "${params.outdir}", keepHeader : true, skip: 1, sort: 'deep')
 
 
     emit:

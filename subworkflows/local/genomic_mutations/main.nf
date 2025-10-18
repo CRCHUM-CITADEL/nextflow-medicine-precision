@@ -63,7 +63,8 @@ workflow GENOMIC_MUTATIONS {
             ger_dna_tsv
         )
 
-        cbioportal_genomic_mutations_merged = cbioportal_genomic_mutation_files.collectFile( name : 'data_mutations_dna_rna_germline.txt', storeDir: "${params.outdir}", keepHeader : true, skip: 1)
+        cbioportal_genomic_mutations_merged = cbioportal_genomic_mutation_files
+            .collectFile( name : 'data_mutations_dna_rna_germline.txt', storeDir: "${params.outdir}", keepHeader : true, skip: 1, sort: 'deep')
 
 
     emit:

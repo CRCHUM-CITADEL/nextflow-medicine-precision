@@ -235,6 +235,11 @@ for (i in 2:length(expression_list)) {
   cat("  - Merged", i, "of", length(expression_list), "files\n")
 }
 
+# After the merge loop, reorder columns to ensure deterministic behaviour
+sample_ids_sorted <- sort(sample_ids)
+merged_expression <- merged_expression %>%
+  select(Hugo_Symbol, all_of(sample_ids_sorted))
+
 # Step 4: Replace missing values
 if (opt$fill_missing == "0") {
   cat("Replacing missing values with 0 in numeric columns...\n")

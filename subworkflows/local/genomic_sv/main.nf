@@ -11,7 +11,9 @@ workflow GENOMIC_SV {
             sv_vcf
         )
 
-        cbioportal_genomic_sv_merged = cbioportal_genomic_sv_files.collectFile( name : 'data_sv.txt', storeDir: "${params.outdir}", keepHeader : true, skip: 1)
+        // toSortedList() is necessary for determinisitic output
+        cbioportal_genomic_sv_merged = cbioportal_genomic_sv_files
+            .collectFile( name : 'data_sv.txt', storeDir: "${params.outdir}", keepHeader : true, skip: 1, sort : 'deep')
 
     emit:
         cbioportal_genomic_sv_merged

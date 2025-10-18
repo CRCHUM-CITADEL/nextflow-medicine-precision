@@ -39,7 +39,7 @@ workflow GENOMIC {
                 return tuple(sample, file, pipeline, sequence)
             }
 
-        ch_vcf_all.view()
+        // ch_vcf_all.view()
 
         // Filter out only the ones for the “cnv” pipeline
         ch_vcf_cnv = ch_vcf_all
@@ -50,6 +50,8 @@ workflow GENOMIC {
             .map { sample, file, pipeline, sequence ->
                 tuple(sample, file)
             }
+
+        ch_vcf_cnv.view()
 
         GENOMIC_CNV(
             ch_vcf_cnv,
