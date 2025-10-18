@@ -59,6 +59,9 @@ runs:
 
           # Save the absolute path of the test.tap file to the output
           echo "tap_file_path=$(realpath test.tap)" >> $GITHUB_OUTPUT
+        
+        tree /home/ubuntu/tests/
+
 
     - name: Generate test summary
       if: always()
@@ -90,12 +93,6 @@ runs:
         else
           echo "| ⚠️ | No test results found | ${{ inputs.profile }} | ${{ inputs.shard }}/${{ inputs.total_shards }} |" >> $GITHUB_STEP_SUMMARY
         fi
-
-    - name: Print output
-      if: always()
-      shell: bash
-      run: |
-        tree /home/ubuntu/tests/
 
     - name: Clean up
       if: always()
