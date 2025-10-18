@@ -1,4 +1,5 @@
 process MERGE_EXPRESSION_FILES_TO_CBIOPORTAL {
+    publishDir "${params.outdir}", mode: 'copy'
 
     container params.container_r
 
@@ -8,8 +9,6 @@ process MERGE_EXPRESSION_FILES_TO_CBIOPORTAL {
     output:
         path "data_expression.txt"
 
-
-    // TODO: fix input_dir and pattern parameters
     script:
     """
     gen_merge_expression_files_to_cbioportal.R \
@@ -17,5 +16,7 @@ process MERGE_EXPRESSION_FILES_TO_CBIOPORTAL {
     --output_file data_expression.txt \
     --fill_missing 0 \
     --strict
+
+    echo -e "${tpm_file_list.join(',')}"
     """
 }

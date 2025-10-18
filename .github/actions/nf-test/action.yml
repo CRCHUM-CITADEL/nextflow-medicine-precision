@@ -91,6 +91,12 @@ runs:
           echo "| ⚠️ | No test results found | ${{ inputs.profile }} | ${{ inputs.shard }}/${{ inputs.total_shards }} |" >> $GITHUB_STEP_SUMMARY
         fi
 
+    - name: Print output
+      if: always()
+      shell: bash
+      run: |
+        tree /home/ubuntu/tests/
+
     - name: Clean up
       if: always()
       shell: bash
