@@ -47,6 +47,8 @@ runs:
       env:
         NFT_WORKDIR: ${{ env.NFT_WORKDIR }}
       run: |
+        set -x
+        set +e
         echo ${{ inputs.github_token }} | apptainer registry login --username ${{ github.actor }} --password-stdin oras://ghcr.io
         nf-test test \
           --profile=+${{ inputs.profile }} \
@@ -59,9 +61,7 @@ runs:
 
           # Save the absolute path of the test.tap file to the output
           echo "tap_file_path=$(realpath test.tap)" >> $GITHUB_OUTPUT
-        
         tree /home/ubuntu/tests/
-
 
     - name: Generate test summary
       if: always()
