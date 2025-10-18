@@ -61,7 +61,9 @@ runs:
 
           # Save the absolute path of the test.tap file to the output
           echo "tap_file_path=$(realpath test.tap)" >> $GITHUB_OUTPUT
-        tree /home/ubuntu/tests/
+        tree .
+        tree /home/runner/work/nextflow-sante-precision
+
 
     - name: Generate test summary
       if: always()
