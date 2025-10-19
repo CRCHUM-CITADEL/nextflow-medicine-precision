@@ -27,6 +27,7 @@ runs:
   using: "composite"
   steps:
     - name: DEBUG what the composite actually received
+      shell: bash
       run: |
         echo "inputs.nxf_version='${{ inputs.nxf_version }}'"
         echo "inputs.version='${{ inputs.version }}'"
@@ -35,6 +36,7 @@ runs:
         env | sort
 
     - name: Remove any preinstalled nextflow (debug only)
+      shell: bash
       run: |
         which -a nextflow || true
         if [ -x "$(command -v nextflow)" ]; then
