@@ -25,7 +25,7 @@ runs:
     - name: Setup Nextflow
       uses: nf-core/setup-nextflow@v2
       with:
-        version: "${{ env.NXF_VERSION }}"
+        version: "${{ env.NXF_VER }}"
 
     - name: Set up Python
       uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
@@ -61,10 +61,10 @@ runs:
 
           # Save the absolute path of the test.tap file to the output
           echo "tap_file_path=$(realpath test.tap)" >> $GITHUB_OUTPUT
-        cat tests/default.nf.test.snap
         cat .nf-test.log
         cat ~/tests/*/output/data_cna_hg38.seg
         cat ~/tests/*/output/data_expression.txt
+        tree .
 
     - name: Generate test summary
       if: always()
