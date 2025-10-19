@@ -61,8 +61,10 @@ runs:
 
           # Save the absolute path of the test.tap file to the output
           echo "tap_file_path=$(realpath test.tap)" >> $GITHUB_OUTPUT
-        tree -a .
         cat tests/default.nf.test.snap
+        cat .nf-test.log
+        cat ~/tests/*/output/data_cna_hg38.seg
+        cat ~/tests/*/output/data_expression.txt
 
     - name: Generate test summary
       if: always()
