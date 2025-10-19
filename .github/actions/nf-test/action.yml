@@ -26,10 +26,28 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: DEBUG: what the composite actually received
+      run: |
+        echo "inputs.nxf_version='${{ inputs.nxf_version }}'"
+        echo "inputs.version='${{ inputs.version }}'"
+        echo "env.NXF_VER='${{ env.NXF_VER }}'"
+        echo "env.NXF_VERSION='${{ env.NXF_VERSION }}'"
+        env | sort
+
+    - name: Remove any preinstalled nextflow (debug only)
+      run: |
+        which -a nextflow || true
+        if [ -x "$(command -v nextflow)" ]; then
+          echo "nextflow exists at: $(which nextflow)"
+          nextflow -version || true
+          echo "Temporarily removing existing nextflow for test"
+          sudo rm -f $(which nextflow) || true
+        fi
+
     - name: Setup Nextflow
       uses: nf-core/setup-nextflow@v2
       with:
-        version: "${{ inputs.nxf_version }}"
+        version: "24.04.7"
 
     - name: Set up Python
       uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
