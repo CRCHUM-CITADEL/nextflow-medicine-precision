@@ -85,6 +85,7 @@ jobs:
           shard: ${{ matrix.shard }}
           total_shards: ${{ env.TOTAL_SHARDS }}
           github_token: ${{ secrets.GH_PAT }}
+          nxf_version: ${{ env.NFT_VER }}
 
   confirm-pass:
     needs: [nf-test]
