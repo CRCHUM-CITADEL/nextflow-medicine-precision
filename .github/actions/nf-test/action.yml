@@ -67,8 +67,8 @@ runs:
           echo "tap_file_path=$(realpath test.tap)" >> $GITHUB_OUTPUT
         cat .nf-test.log
         cat .nextflow.log
-        cat ~/tests/*/output/data_cna_hg38.seg
-        cat ~/tests/*/output/data_expression.txt
+        cat ./~/tests/*/output/data_cna_hg38.seg
+        cat ./~/tests/*/output/data_expression.txt
         tree -a .
 
     - name: Generate test summary
