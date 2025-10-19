@@ -26,7 +26,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: DEBUG: what the composite actually received
+    - name: DEBUG what the composite actually received
       run: |
         echo "inputs.nxf_version='${{ inputs.nxf_version }}'"
         echo "inputs.version='${{ inputs.version }}'"
