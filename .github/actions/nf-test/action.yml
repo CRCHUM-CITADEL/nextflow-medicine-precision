@@ -72,6 +72,7 @@ runs:
           echo "tap_file_path=$(realpath test.tap)" >> $GITHUB_OUTPUT
         cast test.tap
         cat .nf-test.log
+        cat ./~/tests/*/meta/trace.csv
         cat ./~/tests/*/output/data_cna_hg38.seg
         cat ./~/tests/*/output/data_expression.txt
         tree -a .

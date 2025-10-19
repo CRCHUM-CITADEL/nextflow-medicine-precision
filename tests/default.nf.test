@@ -20,7 +20,9 @@ nextflow_pipeline {
 
             println "Test: Stable names: ${stable_name}"
             println "Test: Stable paths: ${stable_path}"
-            println "Test: Succeeded tasks: ${workflow.trace.succeeded().size()}"
+            println "Test: Succeeded tasks size: ${workflow.trace.succeeded().size()}"
+            println "Test: Succeeded tasks: ${workflow.trace.succeeded()}"
+
             println "Test: Output dir: ${params.outdir}"
 
             assertAll(
