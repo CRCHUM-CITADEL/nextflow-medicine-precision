@@ -13,24 +13,13 @@ workflow GENOMIC_MUTATIONS {
         fasta
         vep_cache
         pcgr_data
+        needs_vep
+        needs_pcgr
 
     main:
 
-        // Only download if vep_cache is empty
-        if (vep_cache.isEmpty()) {
-            DOWNLOAD_VEP_TEST()
-            ch_vep_data = DOWNLOAD_VEP_TEST.out.cache_dir
-        } else {
-            ch_vep_data = vep_cache
-        }
-        
-        // Only download if pcgr_data is empty
-        if (pcgr_data.isEmpty()) {
-            DOWNLOAD_PCGR()
-            ch_pcgr_data = DOWNLOAD_PCGR.out.data_dir
-        } else {
-            ch_pcgr_data = pcgr_data
-        }
+        ch_vep_data = needs_vep ? DOWNLOAD_VEP_TEST().cache_dir : vep_cache
+        ch_pcgr_data = needs_pcgr ? DOWNLOAD_PCGR().data_dir : pcgr_data
 
         som_dna_vcf_input = som_dna_vcf.map { id, vcf ->
             def meta = [ id: id ]
