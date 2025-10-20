@@ -16,17 +16,21 @@ workflow GENOMIC_MUTATIONS {
 
     main:
 
-        DOWNLOAD_VEP_TEST()
-        DOWNLOAD_PCGR()
-
-        // Combine both channels and take the first available
-        ch_vep_data = vep_cache
-            .mix(DOWNLOAD_VEP_TEST.out.cache_dir)
-            .first()
-
-        ch_pcgr_data = pcgr_data
-            .mix(DOWNLOAD_PCGR.out.data_dir)
-            .first()
+        // Only download if vep_cache is empty
+        if (vep_cache.isEmpty()) {
+            DOWNLOAD_VEP_TEST()
+            ch_vep_data = DOWNLOAD_VEP_TEST.out.cache_dir
+        } else {
+            ch_vep_data = vep_cache
+        }
+        
+        // Only download if pcgr_data is empty
+        if (pcgr_data.isEmpty()) {
+            DOWNLOAD_PCGR()
+            ch_pcgr_data = DOWNLOAD_PCGR.out.data_dir
+        } else {
+            ch_pcgr_data = pcgr_data
+        }
 
         som_dna_vcf_input = som_dna_vcf.map { id, vcf ->
             def meta = [ id: id ]
