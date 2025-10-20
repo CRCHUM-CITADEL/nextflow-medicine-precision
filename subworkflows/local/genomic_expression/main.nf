@@ -13,9 +13,12 @@ workflow GENOMIC_EXPRESSION {
             gencode_annotations
             )
 
-        // TODO : merge files
         tpm_file_list = tpm_file_ch
-            .collect()
+            .toSortedList { a, b ->
+                def na = a.toString().split(/[\/\\]/).last()
+                def nb = b.toString().split(/[\/\\]/).last()
+                na <=> nb
+            }
             .map { files ->
                 if (files.size() < 2) {
                     log.warn "GENOMIC_EXPRESSION: Found ${files.size()} TPM file(s). Need at least 2 files to merge. Skipping merge step."
@@ -24,8 +27,6 @@ workflow GENOMIC_EXPRESSION {
                 return files
             }
             .filter { it != null }
-
-        tpm_file_list = tpm_file_ch.collect()
 
         cbioportal_genomic_expression = MERGE_EXPRESSION_FILES_TO_CBIOPORTAL(
             tpm_file_list

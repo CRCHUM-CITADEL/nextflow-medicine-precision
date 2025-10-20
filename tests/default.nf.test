@@ -17,6 +17,14 @@ nextflow_pipeline {
             def stable_name = getAllFilesFromDir(params.outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
             // stable_path: All files in ${params.outdir}/ with stable content
             def stable_path = getAllFilesFromDir(params.outdir, ignoreFile: 'tests/.nftignore')
+
+            println "Test: Stable names: ${stable_name}"
+            println "Test: Stable paths: ${stable_path}"
+            println "Test: Succeeded tasks size: ${workflow.trace.succeeded().size()}"
+            println "Test: Succeeded tasks: ${workflow.trace.succeeded()}"
+
+            println "Test: Output dir: ${params.outdir}"
+
             assertAll(
                 { assert workflow.success},
                 { assert snapshot(
