@@ -13,20 +13,13 @@ workflow GENOMIC_MUTATIONS {
         fasta
         vep_cache
         pcgr_data
+        needs_vep
+        needs_pcgr
 
     main:
 
-        DOWNLOAD_VEP_TEST()
-        DOWNLOAD_PCGR()
-
-        // Combine both channels and take the first available
-        ch_vep_data = vep_cache
-            .mix(DOWNLOAD_VEP_TEST.out.cache_dir)
-            .first()
-
-        ch_pcgr_data = pcgr_data
-            .mix(DOWNLOAD_PCGR.out.data_dir)
-            .first()
+        ch_vep_data = needs_vep ? DOWNLOAD_VEP_TEST().cache_dir : vep_cache
+        ch_pcgr_data = needs_pcgr ? DOWNLOAD_PCGR().data_dir : pcgr_data
 
         som_dna_vcf_input = som_dna_vcf.map { id, vcf ->
             def meta = [ id: id ]

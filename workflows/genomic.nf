@@ -22,8 +22,10 @@ workflow GENOMIC {
         ensembl_annotations
         gencode_annotations
         vep_cache
-        fasta
         pcgr_data
+        needs_vep
+        needs_pcgr
+        fasta
 
     main:
 
@@ -122,7 +124,9 @@ workflow GENOMIC {
             ch_vcf_gen_som_rna,
             fasta,
             vep_cache,
-            pcgr_data
+            pcgr_data,
+            needs_vep,
+            needs_pcgr
         )
 
         //
