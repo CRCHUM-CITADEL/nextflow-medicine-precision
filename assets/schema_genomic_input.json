@@ -15,26 +15,26 @@
             },
             "subject_id": {
                 "type": "string",
-                "pattern": "^\\S+$",
+                "pattern": "^(?:\\d+|\\S+)$",
                 "errorMessage": "Subject id must be provided and cannot contain spaces",
                 "meta": "subject"
             },
             "sample_id": {
-                "type": "string",
-                "pattern": "^\\S+$",
+                "type": "integer",
+                "pattern": "^\\d+$",
                 "errorMessage": "sample_id must be provided cannot contain spaces",
                 "meta": "sample"
             },
             "sample_type": {
                 "type": "string",
-                "errorMessage": "sample_type must be provided and be one of 'tumor', 'normal'",
-                "enum": ["tumor", "normal"],
+                "errorMessage": "sample_type must be provided and be one of 'somatic', 'germinal'",
+                "enum": ["somatic", "germinal"],
                 "meta": "type"
             },
             "sequence_data": {
                 "type": "string",
-                "errorMessage": "sequence_data must be provided and be one of 'dna', 'germinal_dna', 'rna'",
-                "enum": ["germinal_dna", "dna", "rna"],
+                "errorMessage": "sequence_data must be provided and be one of 'dna', 'rna'",
+                "enum": ["dna", "rna"],
                 "meta": "sequence"
             },
             "filetype": {

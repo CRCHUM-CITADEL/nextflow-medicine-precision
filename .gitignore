@@ -16,3 +16,6 @@ output/
 assets/test_data/vcf/*.final.*
 assets/test_data/vep/*
 assets/vep/*
+
+samplesheet.csv
+data/
