@@ -42,7 +42,7 @@ You will need to create a samplesheet for this pipeline, which can differ betwee
 
 The samplesheet format is heavily based on <a href="https://github.com/nf-core/oncoanalyser"> oncoanalyser's nf-core pipeline </a>. See below for exact specfications:
 
-## Genomic Input Schema
+#### Genomic Input Schema
 
 The genomic input file must be a JSON array where each object contains the following fields:
 
@@ -57,10 +57,10 @@ The genomic input file must be a JSON array where each object contains the follo
 | `info` | string | No | - | - | Additional information |
 | `filepath` | string | **Yes** | `^\S+\.(?:vcf\.gz\|final\|sf)$` | - | Path to genomic data file (must end with `.vcf.gz`, `.final`, or `.sf`) |
 
-### Notes
-- Fields marked as **Required** must be present in each object
-- All string fields cannot contain spaces unless otherwise noted
-- The `filepath` must point to a valid file with one of the accepted extensions
+> [!NOTE]
+> Fields marked as **Required** must be present in each object
+> All string fields cannot contain spaces unless otherwise noted
+> The `filepath` must point to a valid file with one of the accepted extensions
 
 ### mode = 'clinical'
 TBD
@@ -208,7 +208,7 @@ Vous devrez créer une feuille d'échantillons pour ce pipeline, qui peut diffé
 
 Le format de la feuille d'échantillons est fortement basé sur <a href="https://github.com/nf-core/oncoanalyser"> le pipeline nf-core d'oncoanalyser </a>. Voir ci-dessous pour les spécifications exactes :
 
-## Schéma d'entrée génomique
+#### Schéma d'entrée génomique
 
 Le fichier d'entrée génomique doit être un tableau JSON où chaque objet contient les champs suivants :
 
@@ -223,10 +223,10 @@ Le fichier d'entrée génomique doit être un tableau JSON où chaque objet cont
 | `info` | chaîne | Non | - | - | Informations supplémentaires |
 | `filepath` | chaîne | **Oui** | `^\S+\.(?:vcf\.gz\|final\|sf)$` | - | Chemin vers le fichier de données génomiques (doit se terminer par `.vcf.gz`, `.final` ou `.sf`) |
 
-### Notes
-- Les champs marqués comme **Requis** doivent être présents dans chaque objet
-- Tous les champs de type chaîne ne peuvent pas contenir d'espaces sauf indication contraire
-- Le `filepath` doit pointer vers un fichier valide avec l'une des extensions acceptées
+> [!NOTE]
+> Les champs marqués comme **Requis** doivent être présents dans chaque objet
+> Tous les champs de type chaîne ne peuvent pas contenir d'espaces sauf indication contraire
+> Le `filepath` doit pointer vers un fichier valide avec l'une des extensions acceptées
 
 ### mode = 'clinical'
 À déterminer
