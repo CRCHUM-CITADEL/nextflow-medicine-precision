@@ -54,7 +54,7 @@ workflow GENOMIC {
                 tuple(subject, file)
             }
 
-        ch_vcf_cnv.view()
+        // ch_vcf_cnv.view()
 
         GENOMIC_CNV(
             ch_vcf_cnv,
@@ -91,13 +91,16 @@ workflow GENOMIC {
         )
 
         ch_vcf_gen_ger_dna = ch_vcf_all
-            .filter { subject, type, file, pipeline, sequence ->
+            .filter { subject, file, type, pipeline, sequence ->
                 pipeline == 'hard_filtered' && type == "germinal" && sequence == "dna"
             }
             // then drop the pipeline field
             .map { subject, file, type, pipeline, sequence ->
                 tuple(subject, file)
             }
+        
+        // ch_vcf_all.view()
+        //ch_vcf_gen_ger_dna.view()
 
         // Filter out only the ones for the “expression” pipeline
         ch_vcf_gen_som_dna = ch_vcf_all

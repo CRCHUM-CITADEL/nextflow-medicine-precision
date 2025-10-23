@@ -18,8 +18,16 @@ workflow GENOMIC_MUTATIONS {
 
     main:
 
-        ch_vep_data = needs_vep ? DOWNLOAD_VEP_TEST().cache_dir : vep_cache
-        ch_pcgr_data = needs_pcgr ? DOWNLOAD_PCGR().data_dir : pcgr_data
+        ch_vep_data = needs_vep ? DOWNLOAD_VEP_TEST().cache_dir.first() : vep_cache.first()
+        ch_pcgr_data = needs_pcgr ? DOWNLOAD_PCGR().data_dir.first() : pcgr_data.first()
+
+        ger_dna_vcf.view()
+
+        ger_dna_tsv = PCGR(
+            ger_dna_vcf,
+            ch_vep_data,
+            ch_pcgr_data
+        )
 
         som_dna_vcf_input = som_dna_vcf.map { id, vcf ->
             def meta = [ id: id ]
@@ -29,8 +37,7 @@ workflow GENOMIC_MUTATIONS {
         VCF2MAF(
             som_dna_vcf_input,
             fasta,
-            ch_vep_data,
-            params.vep_params
+            ch_vep_data
         )
 
         som_dna_maf = VCF2MAF.out.maf.map { meta, vcf ->
@@ -43,12 +50,6 @@ workflow GENOMIC_MUTATIONS {
 
         som_dna_rna_maf = INTEGRATE_RNA_VARIANTS(
             som_rna_dna_tuple
-        )
-
-        ger_dna_tsv = PCGR (
-            ger_dna_vcf,
-            ch_vep_data,
-            ch_pcgr_data
         )
 
         cbioportal_genomic_mutation_files = CONVERT_CPSR_TO_MAF (

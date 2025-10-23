@@ -1,5 +1,6 @@
 process PCGR {
     tag { sample_id }
+    label 'process_medium_memory'
 
     container params.container_pcgr
 
@@ -9,7 +10,7 @@ process PCGR {
         path ref_data
 
     output:
-    path "${sample_id}.cpsr.grch38.classification.tsv.gz" //TODO: specify output format
+    path "${sample_id}.cpsr.grch38.classification.tsv.gz"
 
     script:
     """
