@@ -12,11 +12,11 @@ git clone https://github.com/CRCHUM-CITADEL/nextflow-sante-precision.git && cd
 
 > [!NOTE]
 > For all containers we are using Apptainer because of it's compatibility with HPC environments.
-> Find how to install here: https://apptainer.org/docs/admin/main/installation.html
+> If you're not working from an HPC environment, find out how to install it here: https://apptainer.org/docs/admin/main/installation.html
 
 ## Change nextflow.config file 
 
-You will need to change parameters in the nextflow config in order to point to certain files. These options are found in the `params` dict in nextflow.config. Mandatory unless specified otherwise.
+You will need to change parameters in the nextflow config in order to point to certain files. These options are found in the `params` dict in nextflow.config. Parameters are mandatory unless specified otherwise.
 
 | Field                | Description                                                |
 | -------------------- | ---------------------------------------------------------- |
@@ -49,7 +49,7 @@ The genomic input file must be a JSON array where each object contains the follo
 | Column Name | Type | Required | Pattern | Options | Description |
 |-------------|------|----------|---------|---------|-------------|
 | `group_id` | string | No | `^\S+$` (no spaces) | - | Group identifier |
-| `subject_id` | string | **Yes** | `^(?:\d+|\S+)$` (no spaces) | - | Subject identifier |
+| `subject_id` | string | **Yes** | `^(?:\d+\|\S+)$` (no spaces) | - | Subject identifier |
 | `sample_id` | integer | **Yes** | `^\d+$` (numeric only) | - | Sample identifier |
 | `sample_type` | string | **Yes** | - | `somatic`, `germinal` | Type of sample |
 | `sequence_data` | string | **Yes** | - | `dna`, `rna` | Type of sequence data |
@@ -107,7 +107,7 @@ apptainer exec containers/sdp-nextflow_v25.04.7.sif nextflow run main.nf -profil
 
 ### Module load nextflow
 ```
-module load nextflow/25.04.6
+module load nextflow/25.04.6 apptainer
 ```
 
 ### Run nextflow
@@ -178,7 +178,7 @@ git clone https://github.com/CRCHUM-CITADEL/nextflow-sante-precision.git && cd
 
 > [!NOTE]
 > Pour tous les conteneurs, nous utilisons Apptainer en raison de sa compatibilité avec les environnements HPC.
-> Trouvez comment l'installer ici : https://apptainer.org/docs/admin/main/installation.html
+> Si vous ne travaillez pas dans un environment HPC, trouvez comment l'installer ici : https://apptainer.org/docs/admin/main/installation.html
 
 ## Modifier le fichier nextflow.config
 
@@ -215,7 +215,7 @@ Le fichier d'entrée génomique doit être un tableau JSON où chaque objet cont
 | Nom de colonne | Type | Requis | Motif | Options | Description |
 |----------------|------|--------|-------|---------|-------------|
 | `group_id` | chaîne | Non | `^\S+$` (pas d'espaces) | - | Identifiant de groupe |
-| `subject_id` | chaîne | **Oui** | `^(?:\d+|\S+)$` (pas d'espaces) | - | Identifiant du sujet |
+| `subject_id` | chaîne | **Oui** | `^(?:\d+\|\S+)$` (pas d'espaces) | - | Identifiant du sujet |
 | `sample_id` | entier | **Oui** | `^\d+$` (numérique uniquement) | - | Identifiant d'échantillon |
 | `sample_type` | chaîne | **Oui** | - | `somatic`, `germinal` | Type d'échantillon |
 | `sequence_data` | chaîne | **Oui** | - | `dna`, `rna` | Type de données de séquençage |
@@ -269,7 +269,7 @@ apptainer exec containers/sdp-nextflow_v25.04.7.sif nextflow run main.nf -profil
 
 ### Charger le module nextflow
 ```
-module load nextflow/25.04.6
+module load nextflow/25.04.6 apptainer
 ```
 
 ### Exécuter nextflow
