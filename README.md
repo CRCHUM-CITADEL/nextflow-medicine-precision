@@ -55,7 +55,7 @@ The genomic input file must be a JSON array where each object contains the follo
 | `sequence_data` | string | **Yes** | - | `dna`, `rna` | Type of sequence data |
 | `filetype` | string | **Yes** | - | `cnv`, `sv`, `expression`, `hard_filtered` | File type category |
 | `info` | string | No | - | - | Additional information |
-| `filepath` | string | **Yes** | `^\S+\.(?:vcf\.gz|final|sf)$` | - | Path to genomic data file (must end with `.vcf.gz`, `.final`, or `.sf`) |
+| `filepath` | string | **Yes** | `^\S+\.(?:vcf\.gz\|final\|sf)$` | - | Path to genomic data file (must end with `.vcf.gz`, `.final`, or `.sf`) |
 
 ### Notes
 - Fields marked as **Required** must be present in each object
@@ -221,7 +221,7 @@ Le fichier d'entrée génomique doit être un tableau JSON où chaque objet cont
 | `sequence_data` | chaîne | **Oui** | - | `dna`, `rna` | Type de données de séquençage |
 | `filetype` | chaîne | **Oui** | - | `cnv`, `sv`, `expression`, `hard_filtered` | Catégorie de type de fichier |
 | `info` | chaîne | Non | - | - | Informations supplémentaires |
-| `filepath` | chaîne | **Oui** | `^\S+\.(?:vcf\.gz|final|sf)$` | - | Chemin vers le fichier de données génomiques (doit se terminer par `.vcf.gz`, `.final` ou `.sf`) |
+| `filepath` | chaîne | **Oui** | `^\S+\.(?:vcf\.gz\|final\|sf)$` | - | Chemin vers le fichier de données génomiques (doit se terminer par `.vcf.gz`, `.final` ou `.sf`) |
 
 ### Notes
 - Les champs marqués comme **Requis** doivent être présents dans chaque objet
