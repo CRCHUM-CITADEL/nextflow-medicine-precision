@@ -6,7 +6,7 @@ process VCF2MAF {
     conda "${moduleDir}/environment.yml"
     // added local container
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        (params.vcf2maf_container ?: 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/7c/7cbf9421f0bee23a93a35c5d0c7166ac1e89a40008d8e474cecfddb93226bf65/data') :
+        (params.container_vcf2maf ?: 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/7c/7cbf9421f0bee23a93a35c5d0c7166ac1e89a40008d8e474cecfddb93226bf65/data') :
         'community.wave.seqera.io/library/ensembl-vep_vcf2maf:2d40b60b4834af73' }"
 
     input:
