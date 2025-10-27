@@ -98,7 +98,7 @@ workflow GENOMIC {
             .map { subject, file, type, pipeline, sequence ->
                 tuple(subject, file)
             }
-        
+
         // ch_vcf_all.view()
         //ch_vcf_gen_ger_dna.view()
 
