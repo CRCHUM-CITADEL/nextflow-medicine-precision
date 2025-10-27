@@ -4,6 +4,7 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pipeline'
+include { CLINICAL_AGGREGATE } from '../subworkflows/local/clinical_aggregate'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -14,9 +15,14 @@ include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pi
 workflow CLINICAL {
 
     take:
-    clinical_samplesheet
+        sample_list
 
     main:
+        ch_versions = Channel.empty()
+
+        CLINICAL_AGGREGATE(
+            sample_list
+        )
 
     //
     // TASK: Aggregate software versions

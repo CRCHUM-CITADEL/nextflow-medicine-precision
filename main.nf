@@ -67,7 +67,7 @@ workflow {
         )
     }
     else if (params.mode == 'clinical'){
-        CLINICAL_PIPELINE(PIPELINE_INITIALISATION.out.samplesheet)
+        CLINICAL_PIPELINE(params.clinical_sample_list)
     }
 
 

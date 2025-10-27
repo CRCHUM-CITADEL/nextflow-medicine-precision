@@ -1,0 +1,8 @@
+group_id,filetype,filepath,info
+test1,patient,assets/clinical/01_patient.csv,
+test1,diagnosis,assets/clinical/02_diagnosis.csv,
+test1,treatment,assets/clinical/03_treatment.csv,
+test1,surgeries,assets/clinical/04_surgeries.csv,
+test1,systemic_treatment,assets/clinical/05_systemic_treatment.csv,
+test1,specimen,assets/clinical/06_specimen.csv,
+test1,radio_therapy,assets/clinical/08_radio_therapy.csv,
