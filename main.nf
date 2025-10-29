@@ -37,7 +37,8 @@ workflow {
         args,
         params.mode,
         params.outdir,
-        params.input
+        params.genomic_samplesheet,
+        params.clinical_samplesheet
     )
 
     //
@@ -67,7 +68,9 @@ workflow {
         )
     }
     else if (params.mode == 'clinical'){
-        CLINICAL_PIPELINE(params.clinical_sample_list)
+        CLINICAL(
+            PIPELINE_INITIALISATION.out.samplesheet
+        )
     }
 
 

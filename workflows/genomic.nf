@@ -32,7 +32,7 @@ workflow GENOMIC {
         ch_versions = Channel.empty()
 
         // Create a channel where each record has: subject, filepath, germinal or somatic, pipeline label, and dna or rna
-        ch_vcf_all = samplesheet_list
+        ch_files_all = samplesheet_list
             .map { rec ->
                 def subject = rec[0].subject
                 def file = "${params.input_dir}/${rec[0].file}"
@@ -42,10 +42,9 @@ workflow GENOMIC {
                 return tuple(subject, file, type, pipeline, sequence)
             }
 
-        // ch_vcf_all.view()
 
         // Filter out only the ones for the “cnv” pipeline
-        ch_vcf_cnv = ch_vcf_all
+        ch_vcf_cnv = ch_files_all
             .filter { subject, file, type, pipeline, sequence ->
                 pipeline == 'cnv' && type == 'somatic' && sequence == 'dna'
             }
@@ -54,7 +53,6 @@ workflow GENOMIC {
                 tuple(subject, file)
             }
 
-        // ch_vcf_cnv.view()
 
         GENOMIC_CNV(
             ch_vcf_cnv,
@@ -62,7 +60,7 @@ workflow GENOMIC {
         )
 
         // Filter out only the ones for the “sv” pipeline
-        ch_vcf_sv = ch_vcf_all
+        ch_vcf_sv = ch_files_all
             .filter { subject, file, type, pipeline, sequence ->
                 pipeline == 'sv'
             }
@@ -76,7 +74,7 @@ workflow GENOMIC {
         )
 
         // Filter out only the ones for the “expression” pipeline
-        ch_vcf_expression = ch_vcf_all
+        ch_vcf_expression = ch_files_all
             .filter { subject, file, type, pipeline, sequence ->
                 pipeline == 'expression'
             }
@@ -90,7 +88,7 @@ workflow GENOMIC {
             gencode_annotations
         )
 
-        ch_vcf_gen_ger_dna = ch_vcf_all
+        ch_vcf_gen_ger_dna = ch_files_all
             .filter { subject, file, type, pipeline, sequence ->
                 pipeline == 'hard_filtered' && type == "germinal" && sequence == "dna"
             }
@@ -99,11 +97,8 @@ workflow GENOMIC {
                 tuple(subject, file)
             }
 
-        // ch_vcf_all.view()
-        //ch_vcf_gen_ger_dna.view()
-
         // Filter out only the ones for the “expression” pipeline
-        ch_vcf_gen_som_dna = ch_vcf_all
+        ch_vcf_gen_som_dna = ch_files_all
             .filter { subject, file, type, pipeline, sequence ->
                 pipeline == 'hard_filtered' && type == 'somatic' && sequence == "dna"
             }
@@ -112,7 +107,7 @@ workflow GENOMIC {
                 tuple(subject, file)
             }
 
-        ch_vcf_gen_som_rna = ch_vcf_all
+        ch_vcf_gen_som_rna = ch_files_all
             .filter { subject, file, type, pipeline, sequence ->
                 pipeline == 'hard_filtered' && sequence == "rna"
             }

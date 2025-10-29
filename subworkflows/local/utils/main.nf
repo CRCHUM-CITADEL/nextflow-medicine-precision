@@ -30,7 +30,8 @@ workflow PIPELINE_INITIALISATION {
     nextflow_cli_args // array: List of positional nextflow CLI args
     mode              // string: pipeline mode [clinical, genomic]
     outdir            // string: The output directory where the results will be saved
-    input             // string: Path to input samplesheet
+    genomic_input     // string: Path to input samplesheet
+    clinical_input    // string: Path to input samplesheet
 
     main:
 
@@ -64,9 +65,8 @@ workflow PIPELINE_INITIALISATION {
     // Create channel from input file provided through params.input
     //
     if (mode == 'clinical'){
-        error("ERROR: Processing of clinical samplesheet not yet implemented")
 
-        samplesheet_list = Channel.fromList(samplesheetToList(input, "assets/schema_clinical_input.json"))
+        samplesheet_list = Channel.fromList(samplesheetToList(clinical_input, "assets/schema_clinical_input.json"))
 
     } else if (mode == 'genomic'){
         if (!params.gencode_annotations){
@@ -77,7 +77,7 @@ workflow PIPELINE_INITIALISATION {
             error("ERROR: Missing gencode_annotations file (tsv format) Check input in nextflow.config")
         }
 
-        samplesheet_list = Channel.fromList(samplesheetToList(input, "assets/schema_genomic_input.json"))
+        samplesheet_list = Channel.fromList(samplesheetToList(genomic_input, "assets/schema_genomic_input.json"))
     } else {
         error("ERROR: This should not be possible, the mode check should have caught this. Killing pipeline.")
     }
@@ -156,8 +156,12 @@ def validateInputParameters() {
     }
 
     // make sure there's input
-    if (!params.input){
-        error("ERROR: Could not find samplesheet file. Not running any tests. Check input in nextflow.config")
+    if (params.mode == "genomic" && !params.genomic_samplesheet){
+        error("ERROR: Could not find genomic samplesheet. Not running any tests. Check input in nextflow.config")
+    }
+
+    if (params.mode == "clinical" && !params.clinical_samplesheet){
+        error("ERROR: Could not find clinical filesheet. Not running any tests. Check input in nextflow.config")
     }
 
 
