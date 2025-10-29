@@ -6,7 +6,7 @@ process FORMAT_CLINICAL {
     tag { mode }
 
     input:
-        val mode 
+        val mode
         tuple val(group), val(sample_list)
 
     output:

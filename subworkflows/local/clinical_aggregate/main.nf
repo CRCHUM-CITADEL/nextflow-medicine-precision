@@ -5,7 +5,7 @@ workflow CLINICAL_AGGREGATE {
     take:
         filelist
 
-    main: 
+    main:
 
         csvs_with_date = ASSIGN_DATE(
                 filelist
@@ -27,6 +27,6 @@ workflow CLINICAL_AGGREGATE {
             csvs_with_date
         )
 
-        emit: 
+        emit:
             csvs_with_date
 }

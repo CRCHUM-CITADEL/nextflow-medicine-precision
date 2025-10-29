@@ -144,27 +144,27 @@
             "format": "file-path",
             "pattern": "^\\S+\\.gtf"
         },
-        "container_pcgr":{
+        "container_pcgr": {
             "type": "string"
         },
-        "container_python":{
+        "container_python": {
             "type": "string"
         },
-        "container_r":{
+        "container_r": {
             "type": "string"
         },
-        "container_vcf2maf":{
+        "container_vcf2maf": {
             "type": "string"
         },
-        "input_dir":{
+        "input_dir": {
             "type": "string"
         },
-        "genome_reference":{
+        "genome_reference": {
             "type": "string",
             "format": "file-path",
             "pattern": "^\\S+\\.(fa|fasta)$"
         },
-        "vep_params":{
+        "vep_params": {
             "type": "string"
         }
     }

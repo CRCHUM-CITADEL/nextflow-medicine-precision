@@ -19,7 +19,7 @@ option_list <- list(
               help="radio therapy CSV [OPTIONAL]", metavar="FILE"),
   make_option(c("-o", "--output"), type="character", default="data_clinical_sample.txt",
               help="Output file path [default= %default]", metavar="FILE"),
-  make_option(c("-m", "--mode"), type="character", default="sample", 
+  make_option(c("-m", "--mode"), type="character", default="sample",
               help="Between 'sample' or 'patient' mode.")
 )
 
@@ -40,7 +40,7 @@ if (is.null(opt$specimen)) {
 }
 
 # Check that provided files exist
-input_files <- c(opt$patient, opt$diagnosis, opt$treatment, opt$surgeries, 
+input_files <- c(opt$patient, opt$diagnosis, opt$treatment, opt$surgeries,
                  opt$systreat, opt$specimen, opt$radiotherapy)
 
 for (file in input_files[!sapply(input_files, is.null)]) {

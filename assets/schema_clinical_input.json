@@ -16,7 +16,15 @@
             "filetype": {
                 "type": "string",
                 "errorMessage": "filetype must be provided and be one of 'patient', 'diagnosis', 'treatment', 'surgeries', 'systemic_treatment', 'specimen', 'radio_therapy'",
-                "enum": ["patient", "diagnosis", "treatment", "surgeries", "systemic_treatment", "specimen", "radio_therapy"],
+                "enum": [
+                    "patient",
+                    "diagnosis",
+                    "treatment",
+                    "surgeries",
+                    "systemic_treatment",
+                    "specimen",
+                    "radio_therapy"
+                ],
                 "meta": "pipeline"
             },
             "filepath": {

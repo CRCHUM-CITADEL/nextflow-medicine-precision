@@ -21,8 +21,8 @@ workflow CLINICAL {
         ch_versions = Channel.empty()
 
         ch_file_list = file_list
-            .map { row -> 
-                def group = row[0].group 
+            .map { row ->
+                def group = row[0].group
                 def file = "${params.input_dir}/${row[0].file}"
                 def pipeline = row[0].pipeline
                 def extraction_date = row[0].date
