@@ -2,8 +2,8 @@
 .nf-test
 .nf-test.log
 
-work/
-data/
+work
+data
 results/
 .DS_Store
 testing/
@@ -17,5 +17,6 @@ assets/test_data/vcf/*.final.*
 assets/test_data/vep/*
 assets/vep/*
 
-samplesheet.csv
+
+*samplesheet.csv
 data/

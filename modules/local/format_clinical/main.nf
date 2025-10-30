@@ -1,21 +1,20 @@
 process FORMAT_CLINICAL {
-    publishDir "${params.outdir}", mode: 'copy'
+    publishDir "${params.outdir}/${meta.group}", mode: 'copy'
 
     container params.container_r
 
-    tag { mode }
+    tag { meta.mode + meta.group }
 
     input:
-        val mode
-        tuple val(group), val(sample_list)
+        tuple val(meta), val(sample_list)
 
     output:
-        path "data_clinical_${mode}.txt"
+        path "data_clinical_${meta.mode}.txt"
 
     script:
     """
     clin_format.R \
-        --mode ${mode} \
+        --mode ${meta.mode} \
         --patient ${sample_list.patient} \
         --diagnosis ${sample_list.diagnosis} \
         --treatment ${sample_list.treatment} \
@@ -23,6 +22,6 @@ process FORMAT_CLINICAL {
         --systreat ${sample_list.systemic_treatment} \
         --specimen ${sample_list.specimen} \
         --radiotherapy ${sample_list.radio_therapy} \
-        --output data_clinical_${mode}.txt
+        --output data_clinical_${meta.mode}.txt
     """
 }

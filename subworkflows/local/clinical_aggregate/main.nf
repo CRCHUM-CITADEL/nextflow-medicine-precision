@@ -20,9 +20,16 @@ workflow CLINICAL_AGGREGATE {
 
         mode_ch = channel.of("sample", "patient")
 
+        mode_ch
+            .combine(csvs_with_date)
+            .map { mode, group, csv_map ->
+                tuple([group: group, mode: mode], csv_map)
+            }
+            .set { ch_formatted_input }
+
+
         clinical_data = FORMAT_CLINICAL(
-            mode_ch,
-            csvs_with_date
+            ch_formatted_input
         )
 
         emit:

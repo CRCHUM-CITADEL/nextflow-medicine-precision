@@ -8,7 +8,8 @@ process ASSIGN_DATE {
 
     script:
     """
-    awk -F, 'NR==1 {print \$0",date_of_data_extraction"} NR>1 {print \$0",${meta.extraction_date}"}' $csv > csv_with_date.csv
+    cat ${csv}
+    awk -F, 'NR==1 {print \$0",date_of_data_extraction"} NR>1 {print \$0",${meta.extraction_date}"}' ${csv} > csv_with_date.csv
     """
 
 }

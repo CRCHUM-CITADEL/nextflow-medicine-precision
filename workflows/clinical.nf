@@ -28,6 +28,8 @@ workflow CLINICAL {
                 def extraction_date = row[0].date
                 return tuple([group: group, pipeline: pipeline, extraction_date: extraction_date], file)
             }
+        
+        ch_file_list.view()
 
         CLINICAL_AGGREGATE(
             ch_file_list
