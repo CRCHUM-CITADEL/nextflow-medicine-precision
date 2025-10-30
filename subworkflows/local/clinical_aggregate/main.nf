@@ -18,8 +18,6 @@ workflow CLINICAL_AGGREGATE {
                 tuple(group, data_list.collectEntries())
             }
 
-        csvs_with_date.view()
-
         mode_ch = channel.of("sample", "patient")
 
         clinical_data = FORMAT_CLINICAL(
