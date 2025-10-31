@@ -4,6 +4,7 @@ include { PCGR } from '../../../modules/local/pcgr'
 include { CONVERT_CPSR_TO_MAF } from '../../../modules/local/convert_cpsr_to_maf'
 include { DOWNLOAD_VEP_TEST } from '../../../modules/local/download_vep_test'
 include { DOWNLOAD_PCGR } from '../../../modules/local/download_pcgr'
+include { BCFTOOLS_INDEX } from '../../../modules/nf-core/bcftools/index'
 include { GENERATE_CASE_LIST } from '../../../modules/local/generate_case_list'
 include { GENERATE_META_FILE } from '../../../modules/local/generate_meta_file'
 
@@ -24,8 +25,13 @@ workflow GENOMIC_MUTATIONS {
         ch_pcgr_data = needs_pcgr ? DOWNLOAD_PCGR().data_dir.first() : pcgr_data.first()
 
 
+        vcf_index = BCFTOOLS_INDEX(ger_dna_vcf)
+
+        // Join them
+        ger_dna_vcf_with_index = ger_dna_vcf.join(vcf_index.tbi)
+
         ger_dna_tsv = PCGR(
-            ger_dna_vcf,
+            ger_dna_vcf_with_index,
             ch_vep_data,
             ch_pcgr_data
         )
